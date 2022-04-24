@@ -10,6 +10,7 @@ public class Main {
         frame.setTitle("音声通信アプリ");
         frame.setSize(Setting.PANEL_WIDTH, Setting.PANEL_HEIGHT);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }

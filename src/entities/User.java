@@ -2,9 +2,10 @@ package entities;
 
 final public class User {
   public final String name;
+  public final int point;
 
-  User(String name) {
+  User(String name, int point) {
     this.name = name;
-    final User user = new User(null);
+    this.point = point;
   }
 }
