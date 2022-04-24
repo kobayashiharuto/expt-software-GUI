@@ -4,12 +4,9 @@ import javax.swing.*;
 
 import router.Router;
 import services.LoginViewService;
-import setting.Setting;
 import utils.ButtonActionAttacher;
 
 import java.awt.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 
 public class LoginView extends JPanel {
   static public final String path = "login";

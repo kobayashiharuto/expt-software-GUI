@@ -3,18 +3,23 @@ package services;
 import java.util.concurrent.*;
 
 import repositories.LoginRepository;
+import entities.*;
 
 public class LoginViewService {
   public LoginViewService() {
   }
 
   public void login(String name, String password) throws InterruptedException, ExecutionException, TimeoutException {
-    LoginRepository loginRepository = new LoginRepository();
+    User user = new User(name, password, 200);
+    LoginRepository loginRepository = new LoginRepository(user, (result) -> loginCallback(result));
+    loginRepository.start();
+  }
 
-    ExecutorService executorService = Executors.newSingleThreadExecutor();
-    Future<Boolean> future = executorService.submit(loginRepository);
-    System.out.println("start");
-    Boolean result = future.get(500000, TimeUnit.MILLISECONDS);
-    System.out.println("end");
+  static void loginCallback(boolean result) {
+    if (result) {
+      System.out.println("login success");
+    } else {
+      System.out.println("login fail");
+    }
   }
 }
