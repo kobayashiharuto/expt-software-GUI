@@ -3,12 +3,14 @@ package repositories;
 import java.util.function.Consumer;
 
 import entities.User;
+import extensions.UnknownException;
+import utils.OriginalResult;
 
 public class LoginRepository extends Thread {
   private final User user;
-  private final Consumer<Boolean> callback;
+  private final Consumer<OriginalResult<User>> callback;
 
-  public LoginRepository(User user, Consumer<Boolean> callback) {
+  public LoginRepository(User user, Consumer<OriginalResult<User>> callback) {
     this.user = user;
     this.callback = callback;
   }
@@ -18,9 +20,12 @@ public class LoginRepository extends Thread {
     try {
       System.out.println("login start: " + user.name);
       Thread.sleep(1000);
-      callback.accept(true);
+      user.id = "123";
+      final OriginalResult<User> result = new OriginalResult<User>(user);
+      callback.accept(result);
     } catch (InterruptedException e) {
-      callback.accept(false);
+      final OriginalResult<User> result = new OriginalResult<User>(new UnknownException());
+      callback.accept(result);
     }
   }
 }

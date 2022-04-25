@@ -12,15 +12,20 @@ public class LoginView extends JPanel {
   static public final String path = "login";
   public final LoginViewService service = new LoginViewService();
 
+  public final JTextField nameTextField;
+  public final JTextField passwordTextField;
+  public final JLabel errorLabel;
+
   public LoginView() {
-    JPanel panel = new JPanel();
+    JPanel grid = new JPanel();
+
     GridLayout layout = new GridLayout();
     layout.setRows(5);
     layout.setColumns(3);
-    panel.setLayout(layout);
+    grid.setLayout(layout);
 
-    JTextField nameTextField = new JTextField(20);
-    JTextField passTextField = new JTextField(20);
+    nameTextField = new JTextField(20);
+    passwordTextField = new JTextField(20);
     JLabel nameLabel = new JLabel("名前");
     JLabel passLabel = new JLabel("パスワード");
 
@@ -32,19 +37,22 @@ public class LoginView extends JPanel {
     JButton submitButton = new JButton("ログイン");
     ButtonActionAttacher.attach(submitButton, () -> {
       try {
-        service.login(nameTextField.getText(), passTextField.getName());
+        service.login(nameTextField.getText(), passwordTextField.getName());
       } catch (Exception e) {
         e.printStackTrace();
       }
     });
 
-    panel.add(nameLabel);
-    panel.add(nameTextField);
-    panel.add(passLabel);
-    panel.add(passTextField);
-    panel.add(returnButton);
-    panel.add(submitButton);
+    grid.add(nameLabel);
+    grid.add(nameTextField);
+    grid.add(passLabel);
+    grid.add(passwordTextField);
+    grid.add(returnButton);
+    grid.add(submitButton);
 
-    add(panel, BorderLayout.PAGE_END);
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+    add(grid, BorderLayout.PAGE_END);
   }
 }
