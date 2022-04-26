@@ -3,7 +3,6 @@ package views;
 import javax.swing.*;
 
 import controller.SignupViewController;
-import router.Router;
 import utils.ButtonActionAttacher;
 import utils.OriginalView;
 

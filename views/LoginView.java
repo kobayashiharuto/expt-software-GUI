@@ -3,7 +3,6 @@ package views;
 import javax.swing.*;
 
 import controller.LoginViewController;
-import router.Router;
 import utils.ButtonActionAttacher;
 import utils.OriginalView;
 
