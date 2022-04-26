@@ -12,7 +12,7 @@ public class InitialView extends OriginalView {
   static public final String path = "initial";
 
   public InitialView() {
-    super(path);
+    super(path, false);
 
     // ログインボタンの作成
     JButton loginButton = new JButton("ログイン");

@@ -17,7 +17,7 @@ public class EnterRoomView extends OriginalView {
   public final JLabel errorLabel;
 
   public EnterRoomView() {
-    super(path);
+    super(path, true);
 
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));

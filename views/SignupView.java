@@ -18,13 +18,13 @@ public class SignupView extends OriginalView {
   public final JLabel errorLabel;
 
   public SignupView() {
-    super(path);
+    super(path, true);
     
     JPanel grid = new JPanel();
 
     GridLayout layout = new GridLayout();
-    layout.setRows(5);
-    layout.setColumns(3);
+    layout.setRows(3);
+    layout.setColumns(2);
     grid.setLayout(layout);
 
     nameTextField = new JTextField(20);
@@ -33,11 +33,6 @@ public class SignupView extends OriginalView {
 
     JLabel nameLabel = new JLabel("名前");
     JLabel passLabel = new JLabel("パスワード");
-
-    JButton returnButton = new JButton("戻る");
-    ButtonActionAttacher.attach(returnButton, () -> {
-      Router.pop();
-    });
 
     JButton submitButton = new JButton("ログイン");
     ButtonActionAttacher.attach(submitButton, () -> {
@@ -48,7 +43,6 @@ public class SignupView extends OriginalView {
     grid.add(nameTextField);
     grid.add(passLabel);
     grid.add(passwordTextField);
-    grid.add(returnButton);
     grid.add(submitButton);
 
     JPanel panel = new JPanel();

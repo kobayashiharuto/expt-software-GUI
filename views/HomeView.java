@@ -13,7 +13,7 @@ public class HomeView extends OriginalView {
   static public final String path = "home";
 
   public HomeView() {
-    super(path);
+    super(path, true);
 
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));

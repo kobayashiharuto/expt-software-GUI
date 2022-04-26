@@ -43,7 +43,6 @@ public class Router extends JFrame {
   }
 
   private void addRoute(OriginalView view) {
-    System.out.println(view.path);
     cardPanel.add(view, view.path);
   }
 
@@ -59,7 +58,6 @@ public class Router extends JFrame {
   }
 
   static public void push(String path) {
-    System.out.println(path);
     singleton._push(path);
   }
 
