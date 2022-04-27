@@ -22,4 +22,8 @@ abstract class ReactiveState<T> {
             onChange.accept(value);
         }
     }
+
+    public T get() {
+        return value;
+    }
 }

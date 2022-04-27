@@ -3,6 +3,7 @@ package controller;
 import entities.User;
 import router.Router;
 import services.AuthService;
+import states.UserState;
 import utils.OriginalResult;
 import views.HomeView;
 import views.SignupView;
@@ -24,6 +25,7 @@ public class SignupViewController {
       switch (result.type) {
         case success:
           System.out.println("login success: " + result.value.id);
+          UserState.getInstance().change(result.value);
           Router.push(HomeView.path);
           break;
         case failure:

@@ -3,6 +3,7 @@ package views;
 import javax.swing.*;
 
 import router.Router;
+import states.UserState;
 import utils.ButtonActionAttacher;
 import utils.OriginalView;
 
@@ -19,6 +20,11 @@ public class HomeView extends OriginalView {
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
     JLabel label = new JLabel("ようこそ");
+
+    UserState.getInstance().listen((user) -> {
+      if (user == null) return;
+      label.setText("ようこそ" + user.name);
+    });
 
     JButton enterButton = new JButton("部屋に入る");
     ButtonActionAttacher.attach(enterButton, () -> {
