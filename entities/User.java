@@ -14,6 +14,6 @@ final public class User {
   }
 
   static public User generateMockUser() {
-    return new User("1", "hoge", "pass", 200);
+    return new User("1", "hoge", "pass", 1000);
   }
 }

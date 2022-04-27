@@ -2,7 +2,7 @@ package controller;
 
 import entities.User;
 import router.Router;
-import services.SignupService;
+import services.AuthService;
 import utils.OriginalResult;
 import views.HomeView;
 import views.SignupView;
@@ -17,7 +17,7 @@ public class SignupViewController {
     public void signup() {
       final String name = view.nameTextField.getText();
       final String password = view.passwordTextField.getText();
-      SignupService.signup(name, password, (result) -> signupCallback(result));
+      AuthService.signup(name, password, (result) -> signupCallback(result));
     }
   
     static void signupCallback(OriginalResult<User> result) {

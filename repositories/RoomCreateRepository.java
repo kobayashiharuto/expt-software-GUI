@@ -19,12 +19,13 @@ public class RoomCreateRepository extends Thread {
   @Override
   public void run() {
     try {
-      System.out.println("enter start: " + user.name);
-      Thread.sleep(1000);
+      System.out.println("room create start: " + user.name);
+      Thread.sleep(1000); // 部屋作成処理を記述
       final Room room = Room.generateMockRoom();
       final OriginalResult<Room> result = new OriginalResult<Room>(room);
       callback.accept(result);
     } catch (InterruptedException e) {
+      System.out.println("create room faild");
       final OriginalResult<Room> result = new OriginalResult<Room>(new UnknownException());
       callback.accept(result);
     }
