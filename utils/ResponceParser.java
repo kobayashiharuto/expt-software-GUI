@@ -1,10 +1,12 @@
 package utils;
 
-import entities.Comment;
+import java.util.List;
+
+import entities.Room;
 
 public class ResponceParser {
 
-  public static Comment comment(String responce) {
-    return Comment.generateMockComment();
+  public static List<Room> getRooms(String responce) {
+    return Room.generateMockRooms();
   }
 }

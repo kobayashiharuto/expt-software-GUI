@@ -1,13 +1,16 @@
 package controller;
 
+import java.util.List;
+
+import javax.swing.JButton;
+
 import entities.Room;
 import entities.User;
 import router.Router;
 import services.RoomService;
-import settings.Settings;
+import utils.ButtonActionAttacher;
 import utils.CustomDialog;
 import utils.OriginalResult;
-import utils.Validation;
 import views.EnterRoomView;
 import views.RoomView;
 
@@ -18,18 +21,13 @@ public class EnterRoomViewController {
     this.view = view;
   }
 
-  public void enterRoom() {
-    final String roomNum = view.roomNumTextField.getText();
+  public void getRooms() {
+    RoomService.getRooms((result) -> getRoomsCallback(result));
+  }
+
+  public void enterRoom(Room room) {
     final User user = User.generateMockUser();
-
-    if (!Validation.check(roomNum, Settings.ROOM_NUM_LIMIT_MIN, Settings.ROOM_NUM_LIMIT_MAX)) {
-      final String message = "部屋番号は" + Settings.ROOM_NUM_LIMIT_MIN + "以上" + Settings.ROOM_NUM_LIMIT_MAX + "以下で入力してください";
-      view.errorLabel.setText(message);
-      CustomDialog.showError("エラー", message);
-      return;
-    }
-
-    RoomService.enter(roomNum, user, (result) -> enterCallback(result));
+    RoomService.enter(room.id, user, (result) -> enterCallback(result));
   }
 
   private void enterCallback(OriginalResult<Room> result) {
@@ -40,6 +38,29 @@ public class EnterRoomViewController {
         break;
       case failure:
         System.out.println("enter fail");
+        CustomDialog.showError("エラー", result.error.message);
+        view.errorLabel.setText(result.error.message);
+        break;
+    }
+  }
+
+  private void getRoomsCallback(OriginalResult<List<Room>> result) {
+    switch (result.type) {
+      case success:
+        System.out.println("get success");
+        final List<Room> rooms = result.value;
+        for (Room room : rooms) {
+          System.out.println("get " + room.name);
+          final JButton button = new JButton(room.name);
+          ButtonActionAttacher.attach(button, () -> {
+            enterRoom(room);
+          });
+          view.panel.add(button);
+          view.revalidate();
+        }
+        break;
+      case failure:
+        System.out.println("get fail");
         CustomDialog.showError("エラー", result.error.message);
         view.errorLabel.setText(result.error.message);
         break;
