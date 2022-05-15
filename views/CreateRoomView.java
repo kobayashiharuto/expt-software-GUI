@@ -13,7 +13,7 @@ public class CreateRoomView extends OriginalView {
   private final CreateRoomViewController controller = new CreateRoomViewController(this);
 
   public final JButton createButton;
-  public final JTextField roomNumTextField;
+  public final JTextField roomNameTextField;
   public final JLabel errorLabel;
 
   public CreateRoomView() {
@@ -22,9 +22,9 @@ public class CreateRoomView extends OriginalView {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-    JLabel label = new JLabel("部屋番号を入力してください");
+    JLabel label = new JLabel("部屋の名前を入力してください");
     errorLabel = new JLabel("");
-    roomNumTextField = new JTextField(20);
+    roomNameTextField = new JTextField(20);
     createButton = new JButton("部屋を作る");
 
     ButtonActionAttacher.attach(createButton, () -> {
@@ -34,7 +34,7 @@ public class CreateRoomView extends OriginalView {
     // cardPanelとカード移動用ボタンをJFrameに配置
     panel.add(label, BorderLayout.CENTER);
     panel.add(errorLabel, BorderLayout.CENTER);
-    panel.add(roomNumTextField, BorderLayout.CENTER);
+    panel.add(roomNameTextField, BorderLayout.CENTER);
     panel.add(createButton, BorderLayout.CENTER);
     add(panel, BorderLayout.CENTER);
   }

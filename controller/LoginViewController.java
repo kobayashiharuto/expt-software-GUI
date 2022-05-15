@@ -23,7 +23,7 @@ public class LoginViewController {
     final String password = view.passwordTextField.getText();
 
     if (!Validation.check(name, Settings.USER_NAME_LIMIT_MIN, Settings.USER_NAME_LIMIT_MAX)) {
-      final String message = "ユーザー名は" + Settings.ROOM_NUM_LIMIT_MIN + "以上" + Settings.ROOM_NUM_LIMIT_MAX
+      final String message = "ユーザー名は" + Settings.USER_NAME_LIMIT_MIN + "以上" + Settings.USER_NAME_LIMIT_MAX
           + "以下で入力してください";
       view.errorLabel.setText(message);
       CustomDialog.showError("エラー", message);

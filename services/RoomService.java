@@ -13,13 +13,13 @@ public class RoomService {
   private RoomService() {
   }
 
-  static public void enter(String roomNum, User user, Consumer<OriginalResult<Room>> callback) {
-    RoomEnterRepository roomEnterRepository = new RoomEnterRepository(user, callback);
+  static public void enter(Room room, User user, Consumer<OriginalResult<Room>> callback) {
+    RoomEnterRepository roomEnterRepository = new RoomEnterRepository(user, room, callback);
     roomEnterRepository.start();
   }
 
-  static public void create(String roomNum, User user, Consumer<OriginalResult<Room>> callback) {
-    RoomCreateRepository roomCreateRepository = new RoomCreateRepository(user, callback);
+  static public void create(String name, User user, Consumer<OriginalResult<Room>> callback) {
+    RoomCreateRepository roomCreateRepository = new RoomCreateRepository(user, name, callback);
     roomCreateRepository.start();
   }
 

@@ -8,6 +8,7 @@ import entities.Room;
 import entities.User;
 import router.Router;
 import services.RoomService;
+import states.UserState;
 import utils.ButtonActionAttacher;
 import utils.CustomDialog;
 import utils.OriginalResult;
@@ -26,8 +27,8 @@ public class EnterRoomViewController {
   }
 
   public void enterRoom(Room room) {
-    final User user = User.generateMockUser();
-    RoomService.enter(room.id, user, (result) -> enterCallback(result));
+    final User user = UserState.getInstance().get();
+    RoomService.enter(room, user, (result) -> enterCallback(result));
   }
 
   private void enterCallback(OriginalResult<Room> result) {
