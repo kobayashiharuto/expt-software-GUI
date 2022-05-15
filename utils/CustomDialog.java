@@ -2,8 +2,6 @@ package utils;
 
 import javax.swing.*;
 
-import exceptions.OriginalException;
-
 public class CustomDialog extends JFrame {
 
   static public void showInfo(String title, String message) {
@@ -15,11 +13,11 @@ public class CustomDialog extends JFrame {
         null);
   }
 
-  static public void showError(OriginalException error) {
+  static public void showError(String title, String message) {
     JOptionPane.showMessageDialog(
         null,
-        error.message,
-        "エラー",
+        message,
+        title,
         JOptionPane.ERROR_MESSAGE,
         null);
   }
