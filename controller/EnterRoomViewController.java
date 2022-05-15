@@ -14,14 +14,14 @@ public class EnterRoomViewController {
   public EnterRoomViewController(EnterRoomView view) {
     this.view = view;
   }
-  
+
   public void enterRoom() {
     final String roomNum = view.roomNumTextField.getText();
     final User user = User.generateMockUser();
     RoomService.enter(roomNum, user, (result) -> enterCallback(result));
   }
 
-  private static void enterCallback(OriginalResult<Room> result) {
+  private void enterCallback(OriginalResult<Room> result) {
     switch (result.type) {
       case success:
         System.out.println("enter success: " + result.value.id);
