@@ -8,7 +8,7 @@ import utils.OriginalView;
 import java.awt.*;
 
 public class RoomView extends OriginalView {
-  static public final String path = "home";
+  static public final String path = "room";
   // private final RoomViewController controller = new RoomViewController(this);
 
   public RoomView() {

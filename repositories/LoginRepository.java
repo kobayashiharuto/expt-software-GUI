@@ -20,8 +20,8 @@ public class LoginRepository extends Thread {
     try {
       System.out.println("login start: " + user.name);
       Thread.sleep(1000); // ログイン処理を記述
-      final User userData = User.generateMockUser();
-      final OriginalResult<User> result = new OriginalResult<User>(userData);
+      user.id = "123";
+      final OriginalResult<User> result = new OriginalResult<User>(user);
       callback.accept(result);
     } catch (InterruptedException e) {
       System.out.println("login faild");

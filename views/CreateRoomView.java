@@ -25,7 +25,7 @@ public class CreateRoomView extends OriginalView {
     JLabel label = new JLabel("部屋番号を入力してください");
     errorLabel = new JLabel("");
     roomNumTextField = new JTextField(20);
-    createButton = new JButton("部屋に入る");
+    createButton = new JButton("部屋を作る");
 
     ButtonActionAttacher.attach(createButton, () -> {
       controller.createRoom();

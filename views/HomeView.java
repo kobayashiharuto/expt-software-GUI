@@ -14,7 +14,7 @@ public class HomeView extends OriginalView {
   static public final String path = "home";
 
   public HomeView() {
-    super(path, true);
+    super(path, false);
 
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -22,7 +22,8 @@ public class HomeView extends OriginalView {
     JLabel label = new JLabel("ようこそ");
 
     UserState.getInstance().listen((user) -> {
-      if (user == null) return;
+      if (user == null)
+        return;
       label.setText("ようこそ" + user.name);
     });
 
@@ -32,7 +33,7 @@ public class HomeView extends OriginalView {
     });
 
     JButton createButton = new JButton("部屋を作る");
-    ButtonActionAttacher.attach(enterButton, () -> {
+    ButtonActionAttacher.attach(createButton, () -> {
       Router.push(CreateRoomView.path);
     });
 

@@ -48,9 +48,10 @@ public class Router extends JFrame {
 
   private void _push(String path) {
     pageTransitionHistoryStack.push(path);
+    System.out.println("route stack: " + pageTransitionHistoryStack);
     layout.show(cardPanel, path);
   }
-  
+
   private void _pop() {
     pageTransitionHistoryStack.pop();
     final String path = pageTransitionHistoryStack.lastElement();
