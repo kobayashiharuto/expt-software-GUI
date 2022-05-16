@@ -7,20 +7,23 @@ import exceptions.UnknownException;
 import utils.OriginalResult;
 
 public class SignupRepository extends Thread {
-  private final User user;
+  private final String name;
+  private final String password;
+  private final int point;
   private final Consumer<OriginalResult<User>> callback;
 
-  public SignupRepository(User user, Consumer<OriginalResult<User>> callback) {
-    this.user = user;
+  public SignupRepository(String name, String password, int point, Consumer<OriginalResult<User>> callback) {
+    this.name = name;
+    this.password = password;
+    this.point = point;
     this.callback = callback;
   }
 
   @Override
   public void run() {
     try {
-      System.out.println("signup start: " + user.name);
-      Thread.sleep(1000); // ここにサインアップ処理を記述する
-      user.id = "123";
+      System.out.println("signup start: " + name);
+      final User user = signup(name, password, point);
       final OriginalResult<User> result = new OriginalResult<User>(user);
       callback.accept(result);
     } catch (InterruptedException e) {
@@ -28,5 +31,10 @@ public class SignupRepository extends Thread {
       final OriginalResult<User> result = new OriginalResult<User>(new UnknownException());
       callback.accept(result);
     }
+  }
+
+  static private User signup(String name, String password, int point) throws InterruptedException {
+    Thread.sleep(1000);
+    return new User("1231", name, password, point);
   }
 }
