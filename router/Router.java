@@ -1,6 +1,8 @@
 package router;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.swing.*;
@@ -16,6 +18,7 @@ import views.SignupView;
 
 public class Router extends JFrame {
   private final JPanel cardPanel = new JPanel();
+  private final Map<String, OriginalView> routes = new HashMap<>();
   private final CardLayout layout = new CardLayout();
   private final Stack<String> pageTransitionHistoryStack = new Stack<String>();
 
@@ -44,6 +47,7 @@ public class Router extends JFrame {
 
   private void addRoute(OriginalView view) {
     cardPanel.add(view, view.path);
+    routes.put(view.path, view);
   }
 
   private void _push(String path) {

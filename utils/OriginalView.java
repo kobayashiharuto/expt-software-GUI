@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.Map;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -8,6 +10,10 @@ import router.Router;
 
 public abstract class OriginalView extends JPanel {
     public final String path;
+
+    abstract public void onAppear(Map<String, String> param);
+
+    abstract public void onDisapper();
 
     public OriginalView(String path, boolean needBackButton) {
         super();
