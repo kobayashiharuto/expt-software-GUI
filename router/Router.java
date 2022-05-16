@@ -50,20 +50,23 @@ public class Router extends JFrame {
     routes.put(view.path, view);
   }
 
-  private void _push(String path) {
+  private void _push(String path, Map<String, String> param) {
     pageTransitionHistoryStack.push(path);
     System.out.println("route stack: " + pageTransitionHistoryStack);
+    routes.get(path).onAppear(param);
     layout.show(cardPanel, path);
   }
 
   private void _pop() {
+    final String currPath = pageTransitionHistoryStack.lastElement();
+    routes.get(currPath).onDisapper();
     pageTransitionHistoryStack.pop();
     final String path = pageTransitionHistoryStack.lastElement();
     layout.show(cardPanel, path);
   }
 
-  static public void push(String path) {
-    singleton._push(path);
+  static public void push(String path, Map<String, String> param) {
+    singleton._push(path, param);
   }
 
   static public void pop() {

@@ -7,6 +7,7 @@ import utils.ButtonActionAttacher;
 import utils.OriginalView;
 
 import java.awt.*;
+import java.util.Map;
 
 public class CreateRoomView extends OriginalView {
   static public final String path = "createRoom";
@@ -37,5 +38,13 @@ public class CreateRoomView extends OriginalView {
     panel.add(roomNameTextField, BorderLayout.CENTER);
     panel.add(createButton, BorderLayout.CENTER);
     add(panel, BorderLayout.CENTER);
+  }
+
+  @Override
+  public void onAppear(Map<String, String> param) {
+  }
+
+  @Override
+  public void onDisapper() {
   }
 }

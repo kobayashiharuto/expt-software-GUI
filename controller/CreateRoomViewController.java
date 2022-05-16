@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.HashMap;
+
 import entities.Room;
 import entities.User;
 import router.Router;
@@ -13,6 +15,7 @@ import views.RoomView;
 
 public class CreateRoomViewController {
   private final CreateRoomView view;
+  private final RoomService roomService = new RoomService();
 
   public CreateRoomViewController(CreateRoomView view) {
     this.view = view;
@@ -30,14 +33,21 @@ public class CreateRoomViewController {
       return;
     }
 
-    RoomService.create(roomName, user, (result) -> createCallback(result));
+    roomService.create(roomName, user, (result) -> createCallback(result));
   }
 
   private void createCallback(OriginalResult<Room> result) {
     switch (result.type) {
       case success:
         System.out.println("create success: " + result.value.id);
-        Router.push(RoomView.path);
+        HashMap<String, String> map = new HashMap<String, String>() {
+          {
+            put("roomID", result.value.id);
+            put("roomName", result.value.name);
+            put("isCreated", "true");
+          }
+        };
+        Router.push(RoomView.path, map);
         break;
       case failure:
         System.out.println("create fail");

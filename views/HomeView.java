@@ -8,7 +8,7 @@ import utils.ButtonActionAttacher;
 import utils.OriginalView;
 
 import java.awt.*;
-// import java.awt.event.*;
+import java.util.Map;
 
 public class HomeView extends OriginalView {
   static public final String path = "home";
@@ -29,17 +29,25 @@ public class HomeView extends OriginalView {
 
     JButton enterButton = new JButton("部屋に入る");
     ButtonActionAttacher.attach(enterButton, () -> {
-      Router.push(EnterRoomView.path);
+      Router.push(EnterRoomView.path, null);
     });
 
     JButton createButton = new JButton("部屋を作る");
     ButtonActionAttacher.attach(createButton, () -> {
-      Router.push(CreateRoomView.path);
+      Router.push(CreateRoomView.path, null);
     });
 
     panel.add(label, BorderLayout.CENTER);
     panel.add(enterButton, BorderLayout.CENTER);
     panel.add(createButton, BorderLayout.CENTER);
     add(panel, BorderLayout.CENTER);
+  }
+
+  @Override
+  public void onAppear(Map<String, String> param) {
+  }
+
+  @Override
+  public void onDisapper() {
   }
 }

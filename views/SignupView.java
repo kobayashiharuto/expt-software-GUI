@@ -7,6 +7,7 @@ import utils.ButtonActionAttacher;
 import utils.OriginalView;
 
 import java.awt.*;
+import java.util.Map;
 
 public class SignupView extends OriginalView {
   static public final String path = "signup";
@@ -18,7 +19,7 @@ public class SignupView extends OriginalView {
 
   public SignupView() {
     super(path, true);
-    
+
     JPanel grid = new JPanel();
 
     GridLayout layout = new GridLayout();
@@ -35,7 +36,7 @@ public class SignupView extends OriginalView {
 
     JButton submitButton = new JButton("ログイン");
     ButtonActionAttacher.attach(submitButton, () -> {
-        controller.signup();
+      controller.signup();
     });
 
     grid.add(nameLabel);
@@ -48,5 +49,13 @@ public class SignupView extends OriginalView {
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
     add(grid, BorderLayout.PAGE_END);
+  }
+
+  @Override
+  public void onAppear(Map<String, String> param) {
+  }
+
+  @Override
+  public void onDisapper() {
   }
 }

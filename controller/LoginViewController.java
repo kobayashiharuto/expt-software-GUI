@@ -13,6 +13,7 @@ import views.LoginView;
 
 public class LoginViewController {
   private final LoginView view;
+  private final AuthService authService = new AuthService();
 
   public LoginViewController(LoginView view) {
     this.view = view;
@@ -38,7 +39,7 @@ public class LoginViewController {
       return;
     }
 
-    AuthService.login(name, password, (result) -> loginCallback(result));
+    authService.login(name, password, (result) -> loginCallback(result));
   }
 
   private void loginCallback(OriginalResult<User> result) {
@@ -47,7 +48,7 @@ public class LoginViewController {
         view.errorLabel.setText("");
         System.out.println("login success: " + result.value.id);
         UserState.getInstance().change(result.value);
-        Router.push(HomeView.path);
+        Router.push(HomeView.path, null);
         break;
       case failure:
         System.out.println("login fail");

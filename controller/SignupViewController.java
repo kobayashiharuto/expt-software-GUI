@@ -13,6 +13,7 @@ import views.SignupView;
 
 public class SignupViewController {
   private final SignupView view;
+  private final AuthService authService = new AuthService();
 
   public SignupViewController(SignupView view) {
     this.view = view;
@@ -38,7 +39,7 @@ public class SignupViewController {
       return;
     }
 
-    AuthService.signup(name, password, (result) -> signupCallback(result));
+    authService.signup(name, password, (result) -> signupCallback(result));
   }
 
   private void signupCallback(OriginalResult<User> result) {
@@ -46,7 +47,7 @@ public class SignupViewController {
       case success:
         System.out.println("signup success: " + result.value.id);
         UserState.getInstance().change(result.value);
-        Router.push(HomeView.path);
+        Router.push(HomeView.path, null);
         break;
       case failure:
         System.out.println("signup fail");

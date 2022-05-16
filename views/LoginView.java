@@ -7,6 +7,7 @@ import utils.ButtonActionAttacher;
 import utils.OriginalView;
 
 import java.awt.*;
+import java.util.Map;
 
 public class LoginView extends OriginalView {
   static public final String path = "login";
@@ -35,7 +36,7 @@ public class LoginView extends OriginalView {
 
     JButton submitButton = new JButton("ログイン");
     ButtonActionAttacher.attach(submitButton, () -> {
-        controller.login();
+      controller.login();
     });
 
     grid.add(nameLabel);
@@ -48,5 +49,13 @@ public class LoginView extends OriginalView {
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
     add(grid, BorderLayout.PAGE_END);
+  }
+
+  @Override
+  public void onAppear(Map<String, String> param) {
+  }
+
+  @Override
+  public void onDisapper() {
   }
 }
