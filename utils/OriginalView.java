@@ -26,7 +26,7 @@ public abstract class OriginalView extends JPanel {
         setLayout(null);
 
         // メインパネル
-        mainPanel.setLayout(new BorderLayout(10, 5));
+        mainPanel.setLayout(new BorderLayout());
         mainPanel.setBounds(5, 30, Settings.PANEL_WIDTH - 25, Settings.PANEL_HEIGHT - 75);
         add(mainPanel);
 

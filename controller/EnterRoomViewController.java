@@ -3,14 +3,12 @@ package controller;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.JButton;
-
+import components.RoomCell;
 import entities.Room;
 import entities.User;
 import router.Router;
 import services.RoomService;
 import states.UserState;
-import utils.ButtonActionAttacher;
 import utils.CustomDialog;
 import utils.OriginalResult;
 import views.EnterRoomView;
@@ -24,8 +22,8 @@ public class EnterRoomViewController {
     this.view = view;
   }
 
-  public void getRooms() {
-    view.loadingLabel.setText("部屋一覧を取得中...");
+  public void load() {
+    view.scrollPanel.removeAll();
     roomService.getRooms((result) -> getRoomsCallback(result));
   }
 
@@ -50,31 +48,25 @@ public class EnterRoomViewController {
       case failure:
         System.out.println("enter fail");
         CustomDialog.showError("エラー", result.error.message);
-        view.errorLabel.setText(result.error.message);
         break;
     }
   }
 
   private void getRoomsCallback(OriginalResult<List<Room>> result) {
-    view.loadingLabel.setText("");
     switch (result.type) {
       case success:
         System.out.println("get success");
         final List<Room> rooms = result.value;
         for (Room room : rooms) {
           System.out.println("get " + room.name);
-          final JButton button = new JButton(room.name);
-          ButtonActionAttacher.attach(button, () -> {
-            enterRoom(room);
-          });
-          view.panel.add(button);
+          final RoomCell roomCell = new RoomCell(room, (_room) -> enterRoom(_room));
+          view.scrollPanel.add(roomCell);
           view.revalidate();
         }
         break;
       case failure:
         System.out.println("get fail");
         CustomDialog.showError("エラー", result.error.message);
-        view.errorLabel.setText(result.error.message);
         break;
     }
   }

@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 final public class Room {
@@ -20,13 +21,14 @@ final public class Room {
   }
 
   static public List<Room> generateMockRooms() {
-    final Room room1 = new Room("1", "room1", "pass", 8080);
-    final Room room2 = new Room("2", "room2", "pass", 8080);
-    return new java.util.ArrayList<Room>() {
-      {
-        add(room1);
-        add(room2);
-      }
-    };
+    final List<Room> rooms = new ArrayList<Room>();
+
+    for (int i = 0; i < 10; i++) {
+      final String count = Integer.valueOf(i).toString();
+      final Room room = new Room(count, "room" + count, "pass", 8080);
+      rooms.add(room);
+    }
+
+    return rooms;
   }
 }
