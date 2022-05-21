@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
-import java.awt.Color;
 
 import router.Router;
 import settings.Settings;

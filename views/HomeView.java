@@ -16,15 +16,19 @@ public class HomeView extends OriginalView {
   public HomeView() {
     super(path, "ホーム", false);
 
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+    final JPanel panel = new JPanel();
+
+    final GridBagLayout layout = new GridBagLayout();
+    GridBagConstraints gbc = new GridBagConstraints();
+
+    panel.setLayout(layout);
 
     JLabel label = new JLabel("ようこそ");
 
     UserState.getInstance().listen((user) -> {
       if (user == null)
         return;
-      label.setText("ようこそ" + user.name);
+      label.setText("ようこそ " + user.name + "さん");
     });
 
     JButton enterButton = new JButton("部屋に入る");
@@ -37,10 +41,28 @@ public class HomeView extends OriginalView {
       Router.push(CreateRoomView.path, null);
     });
 
-    panel.add(label, BorderLayout.CENTER);
-    panel.add(enterButton, BorderLayout.CENTER);
-    panel.add(createButton, BorderLayout.CENTER);
-    add(panel, BorderLayout.CENTER);
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 2;
+    gbc.insets = new Insets(10, 10, 30, 10);
+    layout.setConstraints(label, gbc);
+    panel.add(label);
+
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.insets = new Insets(10, 10, 10, 10);
+    layout.setConstraints(enterButton, gbc);
+    panel.add(enterButton);
+
+    gbc.gridx = 1;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.insets = new Insets(10, 10, 10, 10);
+    layout.setConstraints(createButton, gbc);
+    panel.add(createButton);
+
+    mainPanel.add(panel);
   }
 
   @Override
