@@ -45,7 +45,7 @@ public class CommentListenRepository extends Thread {
   }
 
   static private Comment streamingComment(User user, String roomID) throws InterruptedException {
-    Thread.sleep(3000); // TCP通信で待機する
+    Thread.sleep(1000); // TCP通信で待機する
     final Comment comment = new Comment("awda", user.name, "awdawdad");
     return comment;
   }

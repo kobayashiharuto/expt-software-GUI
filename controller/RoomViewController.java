@@ -41,7 +41,7 @@ public class RoomViewController {
       case success:
         System.out.println("comment: " + result.value.name + ", " + result.value.comment);
         final JLabel commentLabel = new JLabel(result.value.name + ": " + result.value.comment);
-        view.commentList.add(commentLabel);
+        view.scrollPanel.add(commentLabel, 0);
         view.revalidate();
         break;
       case failure:

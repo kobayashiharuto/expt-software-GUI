@@ -13,26 +13,34 @@ public class RoomView extends OriginalView {
   static public final String path = "room";
   private final RoomViewController controller = new RoomViewController(this);
 
-  public final JPanel panel = new JPanel();
-  public final JPanel commentList = new JPanel();
+  public final JPanel scrollPanel = new JPanel();
   public final JLabel roomNameLabel = new JLabel("部屋");
   public final JTextField commentTextField = new JTextField();
 
   public RoomView() {
-    super(path, "部屋",true);
+    super(path, "部屋", true);
+
+    scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
+
+    JPanel panel = new JPanel();
+    BorderLayout layout = new BorderLayout();
+    panel.setLayout(layout);
 
     final JButton sendButton = new JButton("送信");
-
     ButtonActionAttacher.attach(sendButton, () -> {
       controller.postCommnet();
     });
 
-    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-    panel.add(roomNameLabel, BorderLayout.CENTER);
-    panel.add(commentList, BorderLayout.CENTER);
-    panel.add(commentTextField, BorderLayout.CENTER);
-    panel.add(sendButton, BorderLayout.CENTER);
-    add(panel, BorderLayout.CENTER);
+    JScrollPane scrollpane = new JScrollPane(scrollPanel);
+
+    JPanel boxPanel = new JPanel();
+    boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.X_AXIS));
+    boxPanel.add(commentTextField);
+    boxPanel.add(sendButton);
+
+    panel.add(scrollpane, BorderLayout.CENTER);
+    panel.add(boxPanel, BorderLayout.SOUTH);
+    mainPanel.add(panel);
   }
 
   @Override
@@ -50,7 +58,7 @@ public class RoomView extends OriginalView {
   @Override
   public void onDisapper() {
     System.out.println("部屋から退出しました");
-    commentList.removeAll();
+    scrollPanel.removeAll();
     revalidate();
     controller.dispose();
   }
