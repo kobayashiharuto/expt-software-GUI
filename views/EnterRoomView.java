@@ -17,7 +17,7 @@ public class EnterRoomView extends OriginalView {
   public final JPanel panel = new JPanel();
 
   public EnterRoomView() {
-    super(path, true);
+    super(path, "部屋一覧", true);
 
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 

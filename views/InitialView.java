@@ -13,22 +13,33 @@ public class InitialView extends OriginalView {
   static public final String path = "initial";
 
   public InitialView() {
-    super(path, false);
+    super(path, "ようこそ", false);
+
+    final JPanel panel = new JPanel();
+
+    final GridBagLayout layout = new GridBagLayout();
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(10, 10, 10, 10);
+
+    panel.setLayout(layout);
 
     // ログインボタンの作成
     JButton loginButton = new JButton("ログイン");
     ButtonActionAttacher.attach(loginButton, () -> {
       Router.push(LoginView.path, null);
     });
+    layout.setConstraints(loginButton, gbc);
 
-    // サインアップボタンの生成
-    JButton signupButton = new JButton("サインアップ");
+    // 新規登録ボタンの生成
+    JButton signupButton = new JButton("新規登録");
     ButtonActionAttacher.attach(signupButton, () -> {
       Router.push(SignupView.path, null);
     });
+    layout.setConstraints(loginButton, gbc);
 
-    add(loginButton, BorderLayout.CENTER);
-    add(signupButton, BorderLayout.CENTER);
+    panel.add(loginButton);
+    panel.add(signupButton);
+    mainPanel.add(panel);
   }
 
   @Override

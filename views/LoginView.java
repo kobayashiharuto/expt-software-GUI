@@ -18,14 +18,13 @@ public class LoginView extends OriginalView {
   public final JLabel errorLabel;
 
   public LoginView() {
-    super(path, true);
+    super(path, "ログイン", true);
 
-    JPanel grid = new JPanel();
+    JPanel gridPanel = new JPanel();
 
-    GridLayout layout = new GridLayout();
-    layout.setRows(3);
-    layout.setColumns(2);
-    grid.setLayout(layout);
+    GridBagLayout gridLayout = new GridBagLayout();
+    gridPanel.setLayout(gridLayout);
+    GridBagConstraints gbc = new GridBagConstraints();
 
     nameTextField = new JTextField(20);
     passwordTextField = new JTextField(20);
@@ -39,16 +38,38 @@ public class LoginView extends OriginalView {
       controller.login();
     });
 
-    grid.add(nameLabel);
-    grid.add(nameTextField);
-    grid.add(passLabel);
-    grid.add(passwordTextField);
-    grid.add(submitButton);
+    gbc.insets = new Insets(7, 3, 0, 3);
 
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gridLayout.setConstraints(nameLabel, gbc);
+    gridPanel.add(nameLabel);
 
-    add(grid, BorderLayout.PAGE_END);
+    nameTextField.setSize(200, 20);
+    gbc.gridx = 1;
+    gbc.gridy = 0;
+    gridLayout.setConstraints(nameTextField, gbc);
+    gridPanel.add(nameTextField);
+
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gridLayout.setConstraints(passLabel, gbc);
+    gridPanel.add(passLabel);
+
+    passwordTextField.setSize(200, 20);
+    gbc.gridx = 1;
+    gbc.gridy = 1;
+    gridLayout.setConstraints(passwordTextField, gbc);
+    gridPanel.add(passwordTextField);
+
+    gbc.insets = new Insets(10, 0, 0, 0);
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gbc.gridwidth = 2;
+    gridLayout.setConstraints(submitButton, gbc);
+
+    gridPanel.add(submitButton);
+    mainPanel.add(gridPanel);
   }
 
   @Override

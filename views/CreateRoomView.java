@@ -18,7 +18,7 @@ public class CreateRoomView extends OriginalView {
   public final JLabel errorLabel;
 
   public CreateRoomView() {
-    super(path, true);
+    super(path, "部屋作成", true);
 
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));

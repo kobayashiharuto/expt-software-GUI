@@ -2,11 +2,15 @@ package utils;
 
 import java.util.Map;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.awt.Color;
 
 import router.Router;
+import settings.Settings;
 
 public abstract class OriginalView extends JPanel {
     public final String path;
@@ -15,20 +19,36 @@ public abstract class OriginalView extends JPanel {
 
     abstract public void onDisapper();
 
-    public OriginalView(String path, boolean needBackButton) {
+    protected final JPanel mainPanel = new JPanel();
+
+    public OriginalView(String path, String headerTitle, boolean needBackButton) {
         super();
         this.path = path;
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(null);
+
+        // メインパネル
+        mainPanel.setLayout(new BorderLayout(10, 5));
+        mainPanel.setBounds(5, 30, Settings.PANEL_WIDTH - 25, Settings.PANEL_HEIGHT - 75);
+        add(mainPanel);
+
+        final JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new GridBagLayout());
 
         if (needBackButton) {
+            // 戻るボタンの作成
             JButton backButton = new JButton("戻る");
-            backButton.setAlignmentX(JButton.LEFT_ALIGNMENT);
-            backButton.setHorizontalAlignment(JButton.LEFT);
+            backButton.setBounds(5, 5, 80, 20);
 
             ButtonActionAttacher.attach(backButton, () -> {
                 Router.pop();
             });
             add(backButton);
         }
+
+        // ヘッダーの作成
+        JLabel headerLabel = new JLabel(headerTitle);
+        headerPanel.add(headerLabel);
+        headerPanel.setBounds(0, 0, Settings.PANEL_WIDTH - 25, 30);
+        add(headerPanel);
     }
 }

@@ -7,6 +7,7 @@ import entities.User;
 import services.CommentListenService;
 import services.CommentPostService;
 import states.UserState;
+import utils.CustomDialog;
 import utils.OriginalResult;
 import views.RoomView;
 
@@ -44,8 +45,8 @@ public class RoomViewController {
         view.revalidate();
         break;
       case failure:
+        CustomDialog.showError("エラー", result.error.message);
         System.out.println("comment listen fail");
-        view.errorLabel.setText(result.error.message);
         break;
     }
   }
@@ -57,7 +58,7 @@ public class RoomViewController {
         break;
       case failure:
         System.out.println("comment send fail");
-        view.errorLabel.setText(result.error.message);
+        CustomDialog.showError("エラー", result.error.message);
         break;
     }
   }

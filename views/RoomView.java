@@ -16,11 +16,10 @@ public class RoomView extends OriginalView {
   public final JPanel panel = new JPanel();
   public final JPanel commentList = new JPanel();
   public final JLabel roomNameLabel = new JLabel("部屋");
-  public final JLabel errorLabel = new JLabel();
   public final JTextField commentTextField = new JTextField();
 
   public RoomView() {
-    super(path, true);
+    super(path, "部屋",true);
 
     final JButton sendButton = new JButton("送信");
 
@@ -29,7 +28,6 @@ public class RoomView extends OriginalView {
     });
 
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-    panel.add(errorLabel, BorderLayout.CENTER);
     panel.add(roomNameLabel, BorderLayout.CENTER);
     panel.add(commentList, BorderLayout.CENTER);
     panel.add(commentTextField, BorderLayout.CENTER);

@@ -14,7 +14,7 @@ public class HomeView extends OriginalView {
   static public final String path = "home";
 
   public HomeView() {
-    super(path, false);
+    super(path, "ホーム", false);
 
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));

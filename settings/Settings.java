@@ -5,8 +5,8 @@ public class Settings {
   }
 
   // レイアウト設定
-  public static final int PANEL_WIDTH = 900;
-  public static final int PANEL_HEIGHT = 600;
+  public static final int PANEL_WIDTH = 450;
+  public static final int PANEL_HEIGHT = 300;
 
   // ユーザー設定
   public static final int USER_INIT_POINT = 300;
