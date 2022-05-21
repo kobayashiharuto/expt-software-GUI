@@ -28,7 +28,6 @@ public class CreateRoomViewController {
     if (!Validation.check(roomName, Settings.ROOM_NAME_LIMIT_MIN, Settings.ROOM_NAME_LIMIT_MAX)) {
       final String message = "部屋の名前は" + Settings.ROOM_NAME_LIMIT_MIN + "以上" + Settings.ROOM_NAME_LIMIT_MAX
           + "以下で入力してください";
-      view.errorLabel.setText(message);
       CustomDialog.showError("エラー", message);
       return;
     }
@@ -52,7 +51,6 @@ public class CreateRoomViewController {
       case failure:
         System.out.println("create fail");
         CustomDialog.showError("エラー", result.error.message);
-        view.errorLabel.setText(result.error.message);
         break;
     }
   }

@@ -15,29 +15,45 @@ public class CreateRoomView extends OriginalView {
 
   public final JButton createButton;
   public final JTextField roomNameTextField;
-  public final JLabel errorLabel;
 
   public CreateRoomView() {
     super(path, "部屋作成", true);
 
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+    JPanel gridPanel = new JPanel();
 
-    JLabel label = new JLabel("部屋の名前を入力してください");
-    errorLabel = new JLabel("");
+    GridBagLayout gridLayout = new GridBagLayout();
+    gridPanel.setLayout(gridLayout);
+    GridBagConstraints gbc = new GridBagConstraints();
+
+    JLabel label = new JLabel("作成したい部屋の名前を入力してください");
     roomNameTextField = new JTextField(20);
     createButton = new JButton("部屋を作る");
-
     ButtonActionAttacher.attach(createButton, () -> {
       controller.createRoom();
     });
 
-    // cardPanelとカード移動用ボタンをJFrameに配置
-    panel.add(label, BorderLayout.CENTER);
-    panel.add(errorLabel, BorderLayout.CENTER);
-    panel.add(roomNameTextField, BorderLayout.CENTER);
-    panel.add(createButton, BorderLayout.CENTER);
-    add(panel, BorderLayout.CENTER);
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 2;
+    gbc.insets = new Insets(10, 0, 30, 0);
+    gridLayout.setConstraints(label, gbc);
+    gridPanel.add(label);
+
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.insets = new Insets(0, 0, 15, 0);
+    gridLayout.setConstraints(roomNameTextField, gbc);
+    gridPanel.add(roomNameTextField);
+
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gbc.gridwidth = 1;
+    gbc.insets = new Insets(0, 0, 0, 0);
+    gridLayout.setConstraints(createButton, gbc);
+    gridPanel.add(createButton);
+
+    mainPanel.add(gridPanel);
   }
 
   @Override
