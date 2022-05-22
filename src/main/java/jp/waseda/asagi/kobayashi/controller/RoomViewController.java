@@ -3,6 +3,7 @@ package jp.waseda.asagi.kobayashi.controller;
 import javax.swing.JLabel;
 
 import jp.waseda.asagi.kobayashi.entities.Comment;
+import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.services.CommentListenService;
 import jp.waseda.asagi.kobayashi.services.CommentPostService;
@@ -15,16 +16,21 @@ public class RoomViewController {
   private final RoomView view;
   private final CommentListenService commentListenService = new CommentListenService();
   private final CommentPostService commentPostService = new CommentPostService();
+  private String roomID;
 
   public RoomViewController(RoomView view) {
     this.view = view;
+  }
+
+  public void attachRoomID(String roomID) {
+    this.roomID = roomID;
   }
 
   public void postCommnet() {
     final String comment = view.commentTextField.getText();
     view.commentTextField.setText("");
     final User user = UserState.getInstance().get();
-    commentPostService.post(user, comment, (result) -> commentPostCallback(result));
+    commentPostService.post(user, roomID, comment, (result) -> commentPostCallback(result));
   }
 
   public void listenComment(String roomID) {

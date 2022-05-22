@@ -48,6 +48,8 @@ public class RoomView extends OriginalView {
     final String roomID = param.get("roomID");
     final String roomName = param.get("roomName");
     final boolean isCreated = param.get("isCreated") == "true";
+    controller.attachRoomID(roomID);
+
     System.out.println("部屋に入りました");
     System.out.println(roomID);
     System.out.println(isCreated);

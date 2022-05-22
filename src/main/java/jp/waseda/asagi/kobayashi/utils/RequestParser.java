@@ -12,7 +12,7 @@ public class RequestParser {
     return request;
   }
 
-  public static String comment(String uid, Integer roomid, String comment) {
+  public static String comment(String uid, String roomid, String comment) {
     final String request = "#comment#" + "{\"" + uid + "\",\"" + roomid + "\",\"" + comment + "\"}";
     return request;
   }

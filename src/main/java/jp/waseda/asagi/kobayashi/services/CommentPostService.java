@@ -8,9 +8,9 @@ import jp.waseda.asagi.kobayashi.utils.OriginalResult;
 
 public class CommentPostService {
 
-  public void post(User user,
+  public void post(User user, String roomID,
       String comment, Consumer<OriginalResult<Boolean>> callback) {
-    CommentPostRepository postRepo = new CommentPostRepository(user, comment, callback);
+    CommentPostRepository postRepo = new CommentPostRepository(user, roomID, comment, callback);
     postRepo.start();
   }
 }

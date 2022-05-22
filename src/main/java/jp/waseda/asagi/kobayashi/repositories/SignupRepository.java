@@ -44,7 +44,7 @@ public class SignupRepository extends Thread {
   // return new User("1231", name, password, point);
   // }
 
-  private User signup(String name, String password) throws IOException, DuplicatedException {
+  static private User signup(String name, String password) throws IOException, DuplicatedException {
     final String request = RequestParser.registration(name, password);
     final String responce = ServerClient.getInstance().send(request);
     final User user = ResponceParser.signup(responce, name, password);

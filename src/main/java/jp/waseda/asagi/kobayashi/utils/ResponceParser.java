@@ -10,8 +10,16 @@ import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.DuplicatedException;
 import jp.waseda.asagi.kobayashi.exceptions.ForbiddenException;
+import jp.waseda.asagi.kobayashi.exceptions.UnknownException;
 
 public class ResponceParser {
+
+  public static boolean postComment(String responce) throws UnknownException {
+    if (responce.equals("#success#")) {
+      throw new UnknownException();
+    }
+    return true;
+  }
 
   public static Room startStreamming(String responce, String roomname) {
     final Map<String, String> map = new Gson().fromJson(responce, Map.class);
