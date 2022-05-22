@@ -23,7 +23,7 @@ public class CreateRoomViewController {
 
   public void createRoom() {
     final String roomName = view.roomNameTextField.getText();
-    final User user = User.generateMockUser();
+    final int myListenPort = Settings.CLIENT_LISTEN_PORT;
 
     if (!Validation.check(roomName, Settings.ROOM_NAME_LIMIT_MIN, Settings.ROOM_NAME_LIMIT_MAX)) {
       final String message = "部屋の名前は" + Settings.ROOM_NAME_LIMIT_MIN + "以上" + Settings.ROOM_NAME_LIMIT_MAX
@@ -32,7 +32,7 @@ public class CreateRoomViewController {
       return;
     }
 
-    roomService.create(roomName, user, (result) -> createCallback(result));
+    roomService.create(myListenPort, roomName, (result) -> createCallback(result));
   }
 
   private void createCallback(OriginalResult<Room> result) {

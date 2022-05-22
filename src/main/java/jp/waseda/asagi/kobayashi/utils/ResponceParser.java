@@ -1,5 +1,6 @@
 package jp.waseda.asagi.kobayashi.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +13,19 @@ import jp.waseda.asagi.kobayashi.exceptions.ForbiddenException;
 
 public class ResponceParser {
 
+  public static Room startStreamming(String responce, String roomname) {
+    final Map<String, String> map = new Gson().fromJson(responce, Map.class);
+    final String roomID = map.get("roomID");
+    return new Room(roomID, roomname);
+  }
+
   public static List<Room> getRooms(String responce) {
-    return Room.generateMockRooms();
+    final Map<String, String> map = new Gson().fromJson(responce, Map.class);
+    final List<Room> rooms = new ArrayList<Room>();
+    map.forEach((id, name) -> {
+      rooms.add(new Room(id, name));
+    });
+    return rooms;
   }
 
   public static User login(String responce, String name, String password) throws ForbiddenException {

@@ -6,18 +6,14 @@ import java.util.List;
 final public class Room {
   public String id;
   public String name;
-  public String ip;
-  public int port;
 
-  public Room(String id, String name, String ip, int port) {
+  public Room(String id, String name) {
     this.id = id;
     this.name = name;
-    this.ip = ip;
-    this.port = port;
   }
 
   static public Room generateMockRoom() {
-    return new Room("1", "hoge", "pass", 8080);
+    return new Room("1", "hoge");
   }
 
   static public List<Room> generateMockRooms() {
@@ -25,7 +21,7 @@ final public class Room {
 
     for (int i = 0; i < 10; i++) {
       final String count = Integer.valueOf(i).toString();
-      final Room room = new Room(count, "room" + count, "pass", 8080);
+      final Room room = new Room(count, "room" + count);
       rooms.add(room);
     }
 

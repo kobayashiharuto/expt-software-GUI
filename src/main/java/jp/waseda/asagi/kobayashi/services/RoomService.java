@@ -16,8 +16,8 @@ public class RoomService {
     roomEnterRepository.start();
   }
 
-  public void create(String name, User user, Consumer<OriginalResult<Room>> callback) {
-    RoomCreateRepository roomCreateRepository = new RoomCreateRepository(user, name, callback);
+  public void create(int myListenPort, String roomName, Consumer<OriginalResult<Room>> callback) {
+    RoomCreateRepository roomCreateRepository = new RoomCreateRepository(myListenPort, roomName, callback);
     roomCreateRepository.start();
   }
 

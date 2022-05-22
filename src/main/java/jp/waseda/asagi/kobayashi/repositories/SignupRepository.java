@@ -7,7 +7,6 @@ import jp.waseda.asagi.kobayashi.client.ServerClient;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.DuplicatedException;
 import jp.waseda.asagi.kobayashi.exceptions.NetworkException;
-import jp.waseda.asagi.kobayashi.exceptions.UnknownException;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
 import jp.waseda.asagi.kobayashi.utils.RequestParser;
 import jp.waseda.asagi.kobayashi.utils.ResponceParser;
