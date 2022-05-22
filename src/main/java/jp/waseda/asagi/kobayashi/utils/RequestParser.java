@@ -27,7 +27,7 @@ public class RequestParser {
     return request;
   }
 
-  public static String getroomip(Integer roomid) {
+  public static String getroomip(String roomid) {
     final String request = "#getroomip#" + "{\"" + roomid + "\"}";
     return request;
   }

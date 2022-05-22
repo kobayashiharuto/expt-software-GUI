@@ -11,6 +11,7 @@ import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.DuplicatedException;
 import jp.waseda.asagi.kobayashi.exceptions.ForbiddenException;
+import jp.waseda.asagi.kobayashi.exceptions.NotExistRoomException;
 import jp.waseda.asagi.kobayashi.exceptions.UnknownException;
 
 public class ResponceParser {
@@ -27,6 +28,13 @@ public class ResponceParser {
   public static boolean postComment(String responce) throws UnknownException {
     if (responce.equals("#success#")) {
       throw new UnknownException();
+    }
+    return true;
+  }
+
+  public static boolean getroomip(String responce) throws NotExistRoomException {
+    if (responce.equals("#nothisroom#")) {
+      throw new NotExistRoomException();
     }
     return true;
   }
