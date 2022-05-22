@@ -1,5 +1,8 @@
+import java.io.IOException;
+
 import javax.swing.*;
 
+import client.ServerClient;
 import router.Router;
 import settings.Settings;
 
@@ -13,5 +16,11 @@ public class Main {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        try {
+            ServerClient.getInstance().initSetting();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }

@@ -1,10 +1,16 @@
 package repositories;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
+import client.ServerClient;
 import entities.User;
+import exceptions.ForbiddenException;
+import exceptions.NetworkException;
 import exceptions.UnknownException;
 import utils.OriginalResult;
+import utils.RequestParser;
+import utils.ResponceParser;
 
 public class LoginRepository extends Thread {
   private final String name;
@@ -25,14 +31,27 @@ public class LoginRepository extends Thread {
       final OriginalResult<User> result = new OriginalResult<User>(user);
       callback.accept(result);
     } catch (InterruptedException e) {
-      System.out.println("login faild");
       final OriginalResult<User> result = new OriginalResult<User>(new UnknownException());
+      callback.accept(result);
+    } catch (IOException e) {
+      final OriginalResult<User> result = new OriginalResult<User>(new NetworkException());
+      callback.accept(result);
+    } catch (ForbiddenException e) {
+      final OriginalResult<User> result = new OriginalResult<User>(new ForbiddenException());
       callback.accept(result);
     }
   }
 
-  static private User login(String name, String password) throws InterruptedException {
-    Thread.sleep(1000);
-    return new User("1231", name, password, 100);
+  // private User login(String name, String password) throws InterruptedException
+  // {
+  // Thread.sleep(1000);
+  // return new User("1231", name, password, 100);
+  // }
+
+  private User login(String name, String password) throws InterruptedException, IOException, ForbiddenException {
+    final String request = RequestParser.login(name, password);
+    final String responce = ServerClient.getInstance().send(request);
+    final User user = ResponceParser.login(responce, name, password);
+    return user;
   }
 }

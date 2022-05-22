@@ -2,11 +2,6 @@ package utils;
 
 public class RequestParser {
 
-  public static void main(String[] args) {
-    String request = tip("awdaw", 1, 100);
-    System.out.println(request);
-  }
-
   public static String registration(String username, String password) {
     final String request = "#registration#" + "{\"" + username + "\":\"" + password + "\"}";
     return request;
