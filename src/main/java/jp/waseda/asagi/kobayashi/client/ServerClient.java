@@ -7,7 +7,7 @@ import java.net.Socket;
 import jp.waseda.asagi.kobayashi.settings.Settings;
 
 public class ServerClient {
-  private BufferedReader receiveLine;
+  public BufferedReader receiveLine;
   private PrintWriter sendLine;
   private Socket socket;
 

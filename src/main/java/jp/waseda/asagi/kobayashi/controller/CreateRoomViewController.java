@@ -3,7 +3,6 @@ package jp.waseda.asagi.kobayashi.controller;
 import java.util.HashMap;
 
 import jp.waseda.asagi.kobayashi.entities.Room;
-import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.router.Router;
 import jp.waseda.asagi.kobayashi.services.RoomService;
 import jp.waseda.asagi.kobayashi.settings.Settings;

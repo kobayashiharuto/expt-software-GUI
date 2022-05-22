@@ -3,7 +3,6 @@ package jp.waseda.asagi.kobayashi.controller;
 import javax.swing.JLabel;
 
 import jp.waseda.asagi.kobayashi.entities.Comment;
-import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.services.CommentListenService;
 import jp.waseda.asagi.kobayashi.services.CommentPostService;

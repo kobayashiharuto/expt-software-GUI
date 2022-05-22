@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.DuplicatedException;
@@ -13,6 +14,15 @@ import jp.waseda.asagi.kobayashi.exceptions.ForbiddenException;
 import jp.waseda.asagi.kobayashi.exceptions.UnknownException;
 
 public class ResponceParser {
+
+  public static Comment listenComment(String responce) {
+    final String ujson = responce.replace("#comment#", "");
+    System.out.println(ujson);
+    final Map<String, String> map = new Gson().fromJson(ujson, Map.class);
+    final String id = map.get("id");
+    final String message = map.get("message");
+    return new Comment(id, id, message);
+  }
 
   public static boolean postComment(String responce) throws UnknownException {
     if (responce.equals("#success#")) {
