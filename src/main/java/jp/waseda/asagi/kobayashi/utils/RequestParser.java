@@ -12,8 +12,9 @@ public class RequestParser {
     return request;
   }
 
-  public static String comment(String uid, String roomid, String comment) {
-    final String request = "#comment#" + "{\"" + uid + "\",\"" + roomid + "\",\"" + comment + "\"}";
+  public static String comment(String uid, String username, String roomid, String comment) {
+    final String request = "#comment#" + "{\"" + uid + "\",\"" + username + "\",\"" + roomid + "\",\"" + comment
+        + "\"}";
     return request;
   }
 
@@ -27,8 +28,8 @@ public class RequestParser {
     return request;
   }
 
-  public static String getroomip(String roomid) {
-    final String request = "#getroomip#" + "{\"" + roomid + "\"}";
+  public static String listenroom(String roomid) {
+    final String request = "#listenroom#" + "{\"" + roomid + "\"}";
     return request;
   }
 
@@ -37,9 +38,9 @@ public class RequestParser {
     return request;
   }
 
-  public static String startstreamming(String roomname, Integer port) {
+  public static String startstreamming(String uid, String roomname, Integer port) {
     final String portStr = port.toString();
-    final String request = "#startstreamming#" + "{\"" + roomname + "\":\"" + portStr + "\"}";
+    final String request = "#startstreamming#" + "{\"" + uid + "\":\"" + roomname + "\":\"" + portStr + "\"}";
     return request;
   }
 

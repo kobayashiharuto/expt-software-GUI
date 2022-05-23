@@ -42,6 +42,7 @@ public class RoomQuitRepository extends Thread {
 
   private Boolean stop(String roomID) throws IOException, UnknownException {
     final String request = RequestParser.quitroom(roomID);
+    System.out.println("awdawda");
     final String responce = ServerClient.getInstance().send(request);
     final boolean success = ResponceParser.quitroom(responce);
     return success;

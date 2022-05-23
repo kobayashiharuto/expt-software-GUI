@@ -3,10 +3,9 @@ package jp.waseda.asagi.kobayashi.repositories;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import jp.waseda.asagi.kobayashi.client.ServerClient;
+import jp.waseda.asagi.kobayashi.client.RoomClient;
 import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.User;
-import jp.waseda.asagi.kobayashi.exceptions.NetworkException;
 import jp.waseda.asagi.kobayashi.exceptions.RoomCloseException;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
 import jp.waseda.asagi.kobayashi.utils.ResponceParser;
@@ -41,8 +40,6 @@ public class RoomListenRepository extends Thread {
         callback.accept(result);
       } catch (IOException e) {
         onStreaming = false;
-        final OriginalResult<Comment> result = new OriginalResult<Comment>(new NetworkException());
-        callback.accept(result);
         break;
       } catch (RoomCloseException e) {
         onStreaming = false;
@@ -55,6 +52,7 @@ public class RoomListenRepository extends Thread {
 
   public void dispose() {
     onStreaming = false;
+    RoomClient.getInstance().closeRoomSocket();
   }
 
   // static private Comment streamingComment(User user, String roomID) throws
@@ -65,7 +63,7 @@ public class RoomListenRepository extends Thread {
   // }
 
   static private Comment streamingComment(User user, String roomID) throws IOException, RoomCloseException {
-    final String response = ServerClient.getInstance().receiveLine.readLine();
+    final String response = RoomClient.getInstance().read();
     if (response.matches("#comment#(.*)")) {
       final Comment comment = ResponceParser.listenComment(response);
       return comment;

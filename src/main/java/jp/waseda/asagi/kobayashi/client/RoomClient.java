@@ -3,50 +3,56 @@ package jp.waseda.asagi.kobayashi.client;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import jp.waseda.asagi.kobayashi.settings.Settings;
 
-public class ServerClient {
+public class RoomClient {
   private BufferedReader receiveLine;
   private PrintWriter sendLine;
   private Socket socket;
 
-  private static ServerClient singleton = new ServerClient();
+  private static RoomClient singleton = new RoomClient();
 
-  private ServerClient() {
+  private RoomClient() {
   }
 
-  public void initSetting() throws IOException {
+  public void connectRoomSocket() throws IOException {
     final InetAddress addr = InetAddress.getByName(Settings.SERVER_IP);
     socket = new Socket(addr, Settings.SERVER_PORT);
     receiveLine = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     sendLine = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-    System.out.println("サーバーとの接続完了");
+    System.out.println("ルームとの接続完了");
 
     // 終了時にクライアントを閉じる
     final Thread hook = new Thread() {
       public void run() {
-        dispose();
+        closeRoomSocket();
       }
     };
     Runtime.getRuntime().addShutdownHook(hook);
   }
 
-  public static ServerClient getInstance() {
+  public static RoomClient getInstance() {
     return singleton;
   }
 
   public String send(String request) throws IOException {
     sendLine.println(request);
+    System.out.println(request);
     final String response = receiveLine.readLine();
     System.out.println(response);
     return response;
   }
 
-  public void dispose() {
+  public String read() throws IOException {
+    final String response = receiveLine.readLine();
+    System.out.println(response);
+    return response;
+  }
+
+  public void closeRoomSocket() {
     try {
-      System.out.println("サーバーとの接続終了");
+      System.out.println("ルームとの接続終了");
       socket.close();
       sendLine.close();
       receiveLine.close();

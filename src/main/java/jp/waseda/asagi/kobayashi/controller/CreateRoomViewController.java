@@ -6,6 +6,7 @@ import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.router.Router;
 import jp.waseda.asagi.kobayashi.services.RoomService;
 import jp.waseda.asagi.kobayashi.settings.Settings;
+import jp.waseda.asagi.kobayashi.states.UserState;
 import jp.waseda.asagi.kobayashi.utils.CustomDialog;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
 import jp.waseda.asagi.kobayashi.utils.Validation;
@@ -21,6 +22,7 @@ public class CreateRoomViewController {
   }
 
   public void createRoom() {
+    final String uid = UserState.getInstance().get().id;
     final String roomName = view.roomNameTextField.getText();
     final int myListenPort = Settings.CLIENT_LISTEN_PORT;
 
@@ -31,7 +33,7 @@ public class CreateRoomViewController {
       return;
     }
 
-    roomService.create(myListenPort, roomName, (result) -> createCallback(result));
+    roomService.create(uid, myListenPort, roomName, (result) -> createCallback(result));
   }
 
   private void createCallback(OriginalResult<Room> result) {

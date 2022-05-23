@@ -66,7 +66,6 @@ public class RoomView extends OriginalView {
     System.out.println("部屋から退出しました");
     scrollPanel.removeAll();
     revalidate();
-
     controller.dispose(isCreated);
   }
 }

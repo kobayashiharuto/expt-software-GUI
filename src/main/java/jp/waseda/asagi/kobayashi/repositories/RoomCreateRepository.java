@@ -3,7 +3,7 @@ package jp.waseda.asagi.kobayashi.repositories;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import jp.waseda.asagi.kobayashi.client.ServerClient;
+import jp.waseda.asagi.kobayashi.client.RoomClient;
 import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.exceptions.NetworkException;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
@@ -11,12 +11,14 @@ import jp.waseda.asagi.kobayashi.utils.RequestParser;
 import jp.waseda.asagi.kobayashi.utils.ResponceParser;
 
 public class RoomCreateRepository extends Thread {
+  private final String uid;
   private final int myListenPort;
   private final String roomName;
   private final Consumer<OriginalResult<Room>> callback;
 
-  public RoomCreateRepository(int myListenPort, String name, Consumer<OriginalResult<Room>> callback) {
+  public RoomCreateRepository(String uid, int myListenPort, String name, Consumer<OriginalResult<Room>> callback) {
     this.myListenPort = myListenPort;
+    this.uid = uid;
     this.roomName = name;
     this.callback = callback;
   }
@@ -25,7 +27,7 @@ public class RoomCreateRepository extends Thread {
   public void run() {
     try {
       System.out.println("room create start: " + roomName);
-      final Room room = createRoom(roomName, myListenPort);
+      final Room room = createRoom(uid, roomName, myListenPort);
       final OriginalResult<Room> result = new OriginalResult<Room>(room);
       callback.accept(result);
     } catch (IOException e) {
@@ -42,9 +44,10 @@ public class RoomCreateRepository extends Thread {
   // return room;
   // }
 
-  static private Room createRoom(String roomname, int port) throws IOException {
-    final String request = RequestParser.startstreamming(roomname, port);
-    final String responce = ServerClient.getInstance().send(request);
+  static private Room createRoom(String uid, String roomname, int port) throws IOException {
+    RoomClient.getInstance().connectRoomSocket();
+    final String request = RequestParser.startstreamming(uid, roomname, port);
+    final String responce = RoomClient.getInstance().send(request);
     final Room room = ResponceParser.startStreamming(responce, roomname);
     return room;
   }

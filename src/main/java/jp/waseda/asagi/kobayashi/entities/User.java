@@ -4,13 +4,13 @@ final public class User {
   public String id;
   public String name;
   public String password;
-  public int point;
+  public int deposit;
 
-  public User(String id, String name, String password, int point) {
+  public User(String id, String name, String password, int deposit) {
     this.id = id;
     this.name = name;
     this.password = password;
-    this.point = point;
+    this.deposit = deposit;
   }
 
   static public User generateMockUser() {

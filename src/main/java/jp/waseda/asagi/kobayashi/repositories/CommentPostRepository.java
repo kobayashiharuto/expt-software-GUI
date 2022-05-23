@@ -45,7 +45,7 @@ public class CommentPostRepository extends Thread {
   // }
 
   static private boolean sendComment(User user, String comment, String roomID) throws IOException, UnknownException {
-    final String request = RequestParser.comment(user.id, roomID, comment);
+    final String request = RequestParser.comment(user.id, user.name, roomID, comment);
     final String responce = ServerClient.getInstance().send(request);
     final boolean result = ResponceParser.postComment(responce);
     return result;

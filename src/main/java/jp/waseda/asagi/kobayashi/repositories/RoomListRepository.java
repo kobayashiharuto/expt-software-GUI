@@ -22,7 +22,7 @@ public class RoomListRepository extends Thread {
   public void run() {
     try {
       System.out.println("get rooms start");
-      final List<Room> rooms = getRooms();
+      final List<Room> rooms = getRooms(); 
       final OriginalResult<List<Room>> result = new OriginalResult<List<Room>>(rooms);
       callback.accept(result);
     } catch (IOException e) {

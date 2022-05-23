@@ -20,24 +20,28 @@ public class ResponceParser {
     final String ujson = responce.replace("#comment#", "");
     System.out.println(ujson);
     final Map<String, String> map = new Gson().fromJson(ujson, Map.class);
-    final String id = map.get("id");
+    final String username = map.get("username");
     final String message = map.get("message");
-    return new Comment(id, id, message);
+    return new Comment(username, message);
   }
 
   public static boolean stop(String responce) throws UnknownException {
+    System.out.println("stop: " + responce);
     return true;
   }
 
   public static boolean quitroom(String responce) throws UnknownException {
+    System.out.println("quitroom: " + responce);
     return true;
   }
 
   public static boolean postComment(String responce) throws UnknownException {
+    System.out.println("postComment: " + responce);
     return true;
   }
 
-  public static boolean getroomip(String responce) throws NotExistRoomException {
+  public static boolean listenroom(String responce) throws NotExistRoomException {
+    System.out.println("listenroom: " + responce);
     if (responce.equals("#nothisroom#")) {
       throw new NotExistRoomException();
     }
@@ -65,7 +69,8 @@ public class ResponceParser {
     }
     final Map<String, String> map = new Gson().fromJson(responce, Map.class);
     final String uid = map.get("uid");
-    return new User(uid, name, password, 100);
+    final int deposit = Integer.parseInt(map.get("deposit"));
+    return new User(uid, name, password, deposit);
   }
 
   public static User signup(String responce, String name, String password) throws DuplicatedException {
@@ -74,6 +79,7 @@ public class ResponceParser {
     }
     final Map<String, String> map = new Gson().fromJson(responce, Map.class);
     final String uid = map.get("uid");
-    return new User(uid, name, password, 100);
+    final int deposit = Integer.parseInt(map.get("deposit"));
+    return new User(uid, name, password, deposit);
   }
 }

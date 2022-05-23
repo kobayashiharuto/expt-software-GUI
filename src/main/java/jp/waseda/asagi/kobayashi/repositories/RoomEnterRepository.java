@@ -3,7 +3,7 @@ package jp.waseda.asagi.kobayashi.repositories;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import jp.waseda.asagi.kobayashi.client.ServerClient;
+import jp.waseda.asagi.kobayashi.client.RoomClient;
 import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.NetworkException;
@@ -40,9 +40,10 @@ public class RoomEnterRepository extends Thread {
   }
 
   static private Room enterRoom(User user, Room room) throws IOException, NotExistRoomException {
-    final String request = RequestParser.getroomip(room.id);
-    final String responce = ServerClient.getInstance().send(request);
-    ResponceParser.getroomip(responce);
+    RoomClient.getInstance().connectRoomSocket();
+    final String request = RequestParser.listenroom(room.id);
+    final String responce = RoomClient.getInstance().send(request);
+    ResponceParser.listenroom(responce);
     return room;
   }
 }
