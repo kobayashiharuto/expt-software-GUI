@@ -20,6 +20,8 @@ public abstract class OriginalView extends JPanel {
 
     protected final JPanel mainPanel = new JPanel();
 
+    private final JButton backButton = new JButton("戻る");
+
     public OriginalView(String path, String headerTitle, boolean needBackButton) {
         super();
         this.path = path;
@@ -35,8 +37,7 @@ public abstract class OriginalView extends JPanel {
 
         if (needBackButton) {
             // 戻るボタンの作成
-            JButton backButton = new JButton("戻る");
-            backButton.setBounds(5, 5, 80, 20);
+            backButton.setBounds(5, 5, 150, 20);
 
             ButtonActionAttacher.attach(backButton, () -> {
                 Router.pop();
@@ -49,5 +50,9 @@ public abstract class OriginalView extends JPanel {
         headerPanel.add(headerLabel);
         headerPanel.setBounds(0, 0, Settings.PANEL_WIDTH - 25, 30);
         add(headerPanel);
+    }
+
+    public void changeBackButtonText(String text) {
+        backButton.setText(text);
     }
 }

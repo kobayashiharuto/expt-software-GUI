@@ -32,7 +32,7 @@ public class RequestParser {
     return request;
   }
 
-  public static String quitroom(Integer roomid) {
+  public static String quitroom(String roomid) {
     final String request = "#quitroom#" + "{\"" + roomid + "\"}";
     return request;
   }
@@ -43,7 +43,7 @@ public class RequestParser {
     return request;
   }
 
-  public static String stop(Integer roomid) {
+  public static String stop(String roomid) {
     final String request = "#stop#" + "{\"" + roomid + "\"}";
     return request;
   }

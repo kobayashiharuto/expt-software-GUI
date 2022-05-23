@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 import jp.waseda.asagi.kobayashi.repositories.RoomCreateRepository;
 import jp.waseda.asagi.kobayashi.repositories.RoomEnterRepository;
 import jp.waseda.asagi.kobayashi.repositories.RoomListRepository;
+import jp.waseda.asagi.kobayashi.repositories.RoomQuitRepository;
+import jp.waseda.asagi.kobayashi.repositories.StreamingStopRepository;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
 import jp.waseda.asagi.kobayashi.entities.*;
 
@@ -24,5 +26,15 @@ public class RoomService {
   public void getRooms(Consumer<OriginalResult<List<Room>>> callback) {
     RoomListRepository roomListRepository = new RoomListRepository(callback);
     roomListRepository.start();
+  }
+
+  public void quitRoom(String roomID, Consumer<OriginalResult<Boolean>> callback) {
+    RoomQuitRepository roomQuitRepository = new RoomQuitRepository(roomID, callback);
+    roomQuitRepository.start();
+  }
+
+  public void stopStreaming(String roomID, Consumer<OriginalResult<Boolean>> callback) {
+    StreamingStopRepository streamingStopRepository = new StreamingStopRepository(roomID, callback);
+    streamingStopRepository.start();
   }
 }

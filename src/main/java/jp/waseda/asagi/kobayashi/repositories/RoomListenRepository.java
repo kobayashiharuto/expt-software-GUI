@@ -7,16 +7,17 @@ import jp.waseda.asagi.kobayashi.client.ServerClient;
 import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.NetworkException;
+import jp.waseda.asagi.kobayashi.exceptions.RoomCloseException;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
 import jp.waseda.asagi.kobayashi.utils.ResponceParser;
 
-public class CommentListenRepository extends Thread {
+public class RoomListenRepository extends Thread {
   private final User user;
   private final String roomID;
   private boolean onStreaming = false;
   private final Consumer<OriginalResult<Comment>> callback;
 
-  public CommentListenRepository(User user,
+  public RoomListenRepository(User user,
       String roomID, Consumer<OriginalResult<Comment>> callback) {
     this.user = user;
     this.roomID = roomID;
@@ -40,9 +41,14 @@ public class CommentListenRepository extends Thread {
         callback.accept(result);
       } catch (IOException e) {
         onStreaming = false;
-        System.out.println("listen comments faild");
         final OriginalResult<Comment> result = new OriginalResult<Comment>(new NetworkException());
         callback.accept(result);
+        break;
+      } catch (RoomCloseException e) {
+        onStreaming = false;
+        final OriginalResult<Comment> result = new OriginalResult<Comment>(new RoomCloseException());
+        callback.accept(result);
+        break;
       }
     }
   }
@@ -58,12 +64,15 @@ public class CommentListenRepository extends Thread {
   // return comment;
   // }
 
-  static private Comment streamingComment(User user, String roomID) throws IOException {
+  static private Comment streamingComment(User user, String roomID) throws IOException, RoomCloseException {
     final String response = ServerClient.getInstance().receiveLine.readLine();
-    if (!response.matches("#comment#(.*)")) {
-      return null;
+    if (response.matches("#comment#(.*)")) {
+      final Comment comment = ResponceParser.listenComment(response);
+      return comment;
     }
-    final Comment comment = ResponceParser.listenComment(response);
-    return comment;
+    if (response.matches("#LiveIsStopped#(.*)")) {
+      throw new RoomCloseException();
+    }
+    return null;
   }
 }

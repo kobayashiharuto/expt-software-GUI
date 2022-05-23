@@ -25,10 +25,15 @@ public class ResponceParser {
     return new Comment(id, id, message);
   }
 
+  public static boolean stop(String responce) throws UnknownException {
+    return true;
+  }
+
+  public static boolean quitroom(String responce) throws UnknownException {
+    return true;
+  }
+
   public static boolean postComment(String responce) throws UnknownException {
-    if (responce.equals("#success#")) {
-      throw new UnknownException();
-    }
     return true;
   }
 
