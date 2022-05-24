@@ -53,8 +53,8 @@ public class RoomViewController {
       return;
     }
     final int amount = Integer.parseInt(tip);
-    if (amount < 0) {
-      CustomDialog.showError("エラー", "チップは0以上の数字で入力してください");
+    if (amount < 1) {
+      CustomDialog.showError("エラー", "チップは1以上の数字で入力してください");
       return;
     }
     if (amount > user.deposit) {
