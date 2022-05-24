@@ -9,4 +9,3 @@
 1. サーバーを起動
 1. `mvn package`
 1. `mvn exec:java`
-

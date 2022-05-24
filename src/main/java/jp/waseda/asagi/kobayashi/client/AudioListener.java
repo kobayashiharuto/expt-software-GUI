@@ -42,10 +42,6 @@ public class AudioListener extends Thread {
         }
         DatagramPacket receivePacket = new DatagramPacket(buf, buf.length); // 受け取り用バッファを格納したパケットクラスを作成
         socket.receive(receivePacket); // パケットを受信
-        // if (receivePacket.getLength() != buf.length) {
-        // System.out.println("音声の最後です(ぶつ切り音声防止)");
-        // break;
-        // }
         line.write(buf, 0, buf.length); // バッファをアウトプットデータラインに流す（再生）
       }
     } catch (Exception e) {
