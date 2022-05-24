@@ -18,13 +18,15 @@ public class RoomView extends OriginalView {
   public final JLabel roomNameLabel = new JLabel("部屋");
   public final JTextField commentTextField = new JTextField();
   public final JTextField tipTextField = new JTextField();
+  public final JButton sendCommentButton = new JButton("送信");
+  public final JButton sendTipButton = new JButton("送信");
 
   private boolean isCreated = false;
 
   public RoomView() {
     super(path, "部屋", true);
 
-    JLabel depositLabel = new JLabel("所持ポイント: 0");
+    final JLabel depositLabel = new JLabel("所持ポイント: 0");
     UserState.getInstance().listen((user) -> {
       if (user == null)
         return;
@@ -33,32 +35,41 @@ public class RoomView extends OriginalView {
 
     scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
 
-    JPanel panel = new JPanel();
+    final JPanel panel = new JPanel();
     BorderLayout layout = new BorderLayout();
     panel.setLayout(layout);
 
-    tipTextField.setSize(100, 20);
-    final JButton sendTipButton = new JButton("送信");
-    ButtonActionAttacher.attach(sendTipButton, () -> {
-      controller.postTip();
-    });
-    final JButton sendCommentButton = new JButton("送信");
+    final JLabel commentLabel = new JLabel("コメント: ");
     ButtonActionAttacher.attach(sendCommentButton, () -> {
       controller.postCommnet();
+    });
+    final JLabel tipLabel = new JLabel("ポイント: ");
+    ButtonActionAttacher.attach(sendTipButton, () -> {
+      controller.postTip();
     });
 
     JScrollPane scrollpane = new JScrollPane(scrollPanel);
 
-    JPanel boxPanel = new JPanel();
-    boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.X_AXIS));
-    boxPanel.add(tipTextField);
-    boxPanel.add(sendTipButton);
-    boxPanel.add(commentTextField);
-    boxPanel.add(sendCommentButton);
+    JPanel textFilledsBoxPanel = new JPanel();
+    JPanel tipBoxPanel = new JPanel();
+    JPanel commentBoxPanel = new JPanel();
+
+    textFilledsBoxPanel.setLayout(new BoxLayout(textFilledsBoxPanel, BoxLayout.Y_AXIS));
+    tipBoxPanel.setLayout(new BoxLayout(tipBoxPanel, BoxLayout.X_AXIS));
+    commentBoxPanel.setLayout(new BoxLayout(commentBoxPanel, BoxLayout.X_AXIS));
+
+    commentBoxPanel.add(commentLabel);
+    commentBoxPanel.add(commentTextField);
+    commentBoxPanel.add(sendCommentButton);
+    tipBoxPanel.add(tipLabel);
+    tipBoxPanel.add(tipTextField);
+    tipBoxPanel.add(sendTipButton);
+    textFilledsBoxPanel.add(commentBoxPanel);
+    textFilledsBoxPanel.add(tipBoxPanel);
 
     panel.add(depositLabel, BorderLayout.NORTH);
     panel.add(scrollpane, BorderLayout.CENTER);
-    panel.add(boxPanel, BorderLayout.SOUTH);
+    panel.add(textFilledsBoxPanel, BorderLayout.SOUTH);
     mainPanel.add(panel);
   }
 
@@ -76,6 +87,8 @@ public class RoomView extends OriginalView {
     roomNameLabel.setText(roomName);
     changeBackButtonText(isCreated ? "配信停止" : "部屋を出る");
     controller.listenSetup(isCreated, roomID);
+    tipTextField.setEditable(!isCreated);
+    sendTipButton.setEnabled(!isCreated);
   }
 
   @Override
