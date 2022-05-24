@@ -10,13 +10,13 @@ import jp.waseda.asagi.kobayashi.exceptions.RoomCloseException;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
 import jp.waseda.asagi.kobayashi.utils.ResponceParser;
 
-public class RoomListenRepository extends Thread {
+public class RoomListenForStreamerRepository extends Thread {
   private final User user;
   private final String roomID;
   private boolean onStreaming = false;
   private final Consumer<OriginalResult<Comment>> callback;
 
-  public RoomListenRepository(User user,
+  public RoomListenForStreamerRepository(User user,
       String roomID, Consumer<OriginalResult<Comment>> callback) {
     this.user = user;
     this.roomID = roomID;

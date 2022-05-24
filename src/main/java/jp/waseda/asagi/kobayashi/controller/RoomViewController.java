@@ -35,9 +35,14 @@ public class RoomViewController {
     commentPostService.post(user, roomID, comment, (result) -> commentPostCallback(result));
   }
 
-  public void listenComment(String roomID) {
+  public void listenRoomForListener(String roomID) {
     final User user = UserState.getInstance().get();
-    roomListenService.listen(user, roomID, (result) -> commentGetCallback(result));
+    roomListenService.listenForListener(user, roomID, (result) -> listenerCallback(result));
+  }
+
+  public void listenRoomForStreamer(String roomID) {
+    final User user = UserState.getInstance().get();
+    roomListenService.listenForStremaer(user, roomID, (result) -> listenerCallback(result));
   }
 
   public void dispose(boolean isCreated) {
@@ -49,7 +54,7 @@ public class RoomViewController {
     }
   }
 
-  private void commentGetCallback(OriginalResult<Comment> result) {
+  private void listenerCallback(OriginalResult<Comment> result) {
     switch (result.type) {
       case success:
         System.out.println("comment: " + result.value.name + ", " + result.value.comment);
