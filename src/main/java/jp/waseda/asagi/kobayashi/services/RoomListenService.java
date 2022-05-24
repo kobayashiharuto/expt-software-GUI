@@ -2,6 +2,7 @@ package jp.waseda.asagi.kobayashi.services;
 
 import java.util.function.Consumer;
 
+import jp.waseda.asagi.kobayashi.client.AudioListener;
 import jp.waseda.asagi.kobayashi.client.AudioStreamer;
 import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.Listener;
@@ -14,18 +15,21 @@ public class RoomListenService {
   private RoomListenForListenerRepository listenForListenerRepo;
   private RoomListenForStreamerRepository listenForStreamerRepo;
   private AudioStreamer audioStreamer;
+  private AudioListener audioListener;
 
   public void setupForListener(User user,
       String roomID, Consumer<OriginalResult<Comment>> callback) {
+    audioListener = new AudioListener();
+    audioListener.start();
     listenForListenerRepo = new RoomListenForListenerRepository(user, roomID, callback);
     listenForListenerRepo.start();
   }
 
   public void setupForStreamer(User user,
       String roomID, Consumer<OriginalResult<?>> callback) {
-    listenForStreamerRepo = new RoomListenForStreamerRepository(user, roomID, callback);
     audioStreamer = new AudioStreamer();
     audioStreamer.start();
+    listenForStreamerRepo = new RoomListenForStreamerRepository(user, roomID, callback);
     listenForStreamerRepo.start();
   }
 
@@ -49,6 +53,10 @@ public class RoomListenService {
     if (listenForStreamerRepo != null) {
       listenForStreamerRepo.dispose();
       listenForStreamerRepo = null;
+    }
+    if (audioListener != null) {
+      audioListener.listenStop();
+      audioListener = null;
     }
   }
 }

@@ -4,11 +4,9 @@ import javax.sound.sampled.*;
 
 import jp.waseda.asagi.kobayashi.entities.Listener;
 import jp.waseda.asagi.kobayashi.settings.AudioData;
-import jp.waseda.asagi.kobayashi.settings.Settings;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +34,6 @@ public class AudioStreamer extends Thread {
     AudioFormat format = AudioData.format; // 音声フォーマット形式の作成
 
     try {
-      addListner(new Listener("0", Settings.CLIENT_LISTEN_PORT, InetAddress.getLocalHost()));
       socket = new DatagramSocket(); // データグラムソケットを作成
       line = AudioSystem.getTargetDataLine(format); // マイクリソースから音声を取得するラインを作成
 
