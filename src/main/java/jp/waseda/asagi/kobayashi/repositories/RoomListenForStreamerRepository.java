@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import jp.waseda.asagi.kobayashi.client.RoomClient;
 import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.Listener;
+import jp.waseda.asagi.kobayashi.entities.Tip;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.RoomCloseException;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
@@ -29,14 +30,14 @@ public class RoomListenForStreamerRepository extends Thread {
     onStreaming = true;
     while (onStreaming) {
       try {
-        final Object data = streamingComment(user, roomID);
+        final Object roomData = listenRoomData(user, roomID);
         if (!onStreaming) {
           break;
         }
-        if (data == null) {
+        if (roomData == null) {
           continue;
         }
-        final OriginalResult<Object> result = new OriginalResult<Object>(data);
+        final OriginalResult<Object> result = new OriginalResult<Object>(roomData);
         callback.accept(result);
       } catch (IOException e) {
         onStreaming = false;
@@ -55,18 +56,15 @@ public class RoomListenForStreamerRepository extends Thread {
     RoomClient.getInstance().closeRoomSocket();
   }
 
-  // static private Comment streamingComment(User user, String roomID) throws
-  // InterruptedException {
-  // Thread.sleep(1000); // TCP通信で待機する
-  // final Comment comment = new Comment("awda", user.name, "awdawdad");
-  // return comment;
-  // }
-
-  static private Object streamingComment(User user, String roomID) throws IOException, RoomCloseException {
+  static private Object listenRoomData(User user, String roomID) throws IOException, RoomCloseException {
     final String response = RoomClient.getInstance().read();
     if (response.matches("#comment#(.*)")) {
       final Comment comment = ResponceParser.listenComment(response);
       return comment;
+    }
+    if (response.matches("#tip#(.*)")) {
+      final Tip tip = ResponceParser.listenTip(response);
+      return tip;
     }
     if (response.matches("#startListen#(.*)")) {
       final Listener listener = ResponceParser.startListen(response);

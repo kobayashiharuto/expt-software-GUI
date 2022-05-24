@@ -3,6 +3,7 @@ package jp.waseda.asagi.kobayashi.views;
 import javax.swing.*;
 
 import jp.waseda.asagi.kobayashi.controller.RoomViewController;
+import jp.waseda.asagi.kobayashi.states.UserState;
 import jp.waseda.asagi.kobayashi.utils.ButtonActionAttacher;
 import jp.waseda.asagi.kobayashi.utils.OriginalView;
 
@@ -16,11 +17,19 @@ public class RoomView extends OriginalView {
   public final JPanel scrollPanel = new JPanel();
   public final JLabel roomNameLabel = new JLabel("部屋");
   public final JTextField commentTextField = new JTextField();
+  public final JTextField tipTextField = new JTextField();
 
   private boolean isCreated = false;
 
   public RoomView() {
     super(path, "部屋", true);
+
+    JLabel depositLabel = new JLabel("所持ポイント: 0");
+    UserState.getInstance().listen((user) -> {
+      if (user == null)
+        return;
+      depositLabel.setText("所持ポイント: " + user.deposit);
+    });
 
     scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
 
@@ -28,8 +37,13 @@ public class RoomView extends OriginalView {
     BorderLayout layout = new BorderLayout();
     panel.setLayout(layout);
 
-    final JButton sendButton = new JButton("送信");
-    ButtonActionAttacher.attach(sendButton, () -> {
+    tipTextField.setSize(100, 20);
+    final JButton sendTipButton = new JButton("送信");
+    ButtonActionAttacher.attach(sendTipButton, () -> {
+      controller.postTip();
+    });
+    final JButton sendCommentButton = new JButton("送信");
+    ButtonActionAttacher.attach(sendCommentButton, () -> {
       controller.postCommnet();
     });
 
@@ -37,9 +51,12 @@ public class RoomView extends OriginalView {
 
     JPanel boxPanel = new JPanel();
     boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.X_AXIS));
+    boxPanel.add(tipTextField);
+    boxPanel.add(sendTipButton);
     boxPanel.add(commentTextField);
-    boxPanel.add(sendButton);
+    boxPanel.add(sendCommentButton);
 
+    panel.add(depositLabel, BorderLayout.NORTH);
     panel.add(scrollpane, BorderLayout.CENTER);
     panel.add(boxPanel, BorderLayout.SOUTH);
     mainPanel.add(panel);

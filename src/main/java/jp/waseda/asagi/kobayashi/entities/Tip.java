@@ -8,5 +8,4 @@ public class Tip {
     this.name = name;
     this.amount = amount;
   }
-
 }

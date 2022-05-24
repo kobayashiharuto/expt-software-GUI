@@ -4,7 +4,6 @@ import java.util.function.Consumer;
 
 import jp.waseda.asagi.kobayashi.client.AudioListener;
 import jp.waseda.asagi.kobayashi.client.AudioStreamer;
-import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.Listener;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.repositories.RoomListenForListenerRepository;
@@ -18,7 +17,7 @@ public class RoomListenService {
   private AudioListener audioListener;
 
   public void setupForListener(User user,
-      String roomID, Consumer<OriginalResult<Comment>> callback) {
+      String roomID, Consumer<OriginalResult<?>> callback) {
     audioListener = new AudioListener();
     audioListener.start();
     listenForListenerRepo = new RoomListenForListenerRepository(user, roomID, callback);

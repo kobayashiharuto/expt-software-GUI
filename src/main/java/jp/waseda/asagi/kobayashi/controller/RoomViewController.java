@@ -1,14 +1,17 @@
 package jp.waseda.asagi.kobayashi.controller;
 
+import java.awt.Color;
+
 import javax.swing.JLabel;
 
 import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.Listener;
+import jp.waseda.asagi.kobayashi.entities.Tip;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.router.Router;
 import jp.waseda.asagi.kobayashi.services.RoomListenService;
 import jp.waseda.asagi.kobayashi.services.RoomService;
-import jp.waseda.asagi.kobayashi.services.CommentPostService;
+import jp.waseda.asagi.kobayashi.services.RoomPostService;
 import jp.waseda.asagi.kobayashi.states.UserState;
 import jp.waseda.asagi.kobayashi.utils.CustomDialog;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
@@ -18,7 +21,7 @@ public class RoomViewController {
   private final RoomView view;
   private final RoomListenService roomListenService = new RoomListenService();
   private final RoomService roomService = new RoomService();
-  private final CommentPostService commentPostService = new CommentPostService();
+  private final RoomPostService roomPostService = new RoomPostService();
   private String roomID;
 
   public RoomViewController(RoomView view) {
@@ -33,7 +36,32 @@ public class RoomViewController {
     final String comment = view.commentTextField.getText();
     view.commentTextField.setText("");
     final User user = UserState.getInstance().get();
-    commentPostService.post(user, roomID, comment, (result) -> commentPostCallback(result));
+    roomPostService.postComment(user, roomID, comment, (result) -> commentPostCallback(result));
+  }
+
+  public void postTip() {
+    final String tip = view.tipTextField.getText();
+    view.tipTextField.setText("");
+    final User user = UserState.getInstance().get();
+
+    if (tip.isEmpty()) {
+      CustomDialog.showError("エラー", "チップを入力してください");
+      return;
+    }
+    if (!tip.matches("^[0-9]+$")) {
+      CustomDialog.showError("エラー", "チップは数字で入力してください");
+      return;
+    }
+    final int amount = Integer.parseInt(tip);
+    if (amount < 0) {
+      CustomDialog.showError("エラー", "チップは0以上の数字で入力してください");
+      return;
+    }
+    if (amount > user.deposit) {
+      CustomDialog.showError("エラー", "チップが足りません");
+      return;
+    }
+    roomPostService.postTip(user, roomID, amount, (result) -> tipPostCallback(result));
   }
 
   public void listenSetup(boolean isCreated, String roomID) {
@@ -55,14 +83,24 @@ public class RoomViewController {
     }
   }
 
-  private void listenerCallback(OriginalResult<Comment> result) {
+  private void listenerCallback(OriginalResult<?> result) {
     switch (result.type) {
       case success:
-        System.out.println("comment: " + result.value.name + ", " + result.value.comment);
-        final JLabel commentLabel = new JLabel(result.value.name + ": " + result.value.comment);
-        view.scrollPanel.add(commentLabel, 0);
-        view.revalidate();
-        break;
+        if (result.value instanceof Comment) {
+          final Comment comment = (Comment) result.value;
+          final JLabel commentLabel = new JLabel(comment.name + ": " + comment.comment);
+          view.scrollPanel.add(commentLabel, 0);
+          view.revalidate();
+          return;
+        }
+        if (result.value instanceof Tip) {
+          final Tip tip = (Tip) result.value;
+          final JLabel commentLabel = new JLabel(tip.name + "さんが" + tip.amount + "ポイントを送りました");
+          commentLabel.setForeground(Color.RED);
+          view.scrollPanel.add(commentLabel, 0);
+          view.revalidate();
+          return;
+        }
       case failure:
         CustomDialog.showError("エラー", result.error.message);
         Router.pop();
@@ -77,6 +115,17 @@ public class RoomViewController {
           final Comment comment = (Comment) result.value;
           System.out.println("comment: " + comment.name + ", " + comment.comment);
           final JLabel commentLabel = new JLabel(comment.name + ": " + comment.comment);
+          view.scrollPanel.add(commentLabel, 0);
+          view.revalidate();
+          return;
+        }
+        if (result.value instanceof Tip) {
+          final Tip tip = (Tip) result.value;
+          final JLabel commentLabel = new JLabel(tip.name + "さんが" + tip.amount + "ポイントを送りました");
+          commentLabel.setForeground(Color.RED);
+          final User user = UserState.getInstance().get();
+          user.deposit += tip.amount;
+          UserState.getInstance().change(user);
           view.scrollPanel.add(commentLabel, 0);
           view.revalidate();
           return;
@@ -102,6 +151,20 @@ public class RoomViewController {
   private void commentPostCallback(OriginalResult<Boolean> result) {
     switch (result.type) {
       case success:
+        break;
+      case failure:
+        CustomDialog.showError("エラー", result.error.message);
+        break;
+    }
+  }
+
+  private void tipPostCallback(OriginalResult<Integer> result) {
+    switch (result.type) {
+      case success:
+        final int amount = result.value;
+        final User user = UserState.getInstance().get();
+        user.deposit = amount;
+        UserState.getInstance().change(user);
         break;
       case failure:
         CustomDialog.showError("エラー", result.error.message);

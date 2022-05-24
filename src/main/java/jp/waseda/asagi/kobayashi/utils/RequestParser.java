@@ -18,8 +18,8 @@ public class RequestParser {
     return request;
   }
 
-  public static String tip(String uid, Integer roomid, Integer amount) {
-    final String request = "#tip#" + "{\"" + uid + "\",\"" + roomid + "\",\"" + amount + "\"}";
+  public static String tip(String uid, String name, String roomid, Integer amount) {
+    final String request = "#tip#" + "{\"" + uid + "\",\"" + name + "\",\"" + roomid + "\",\"" + amount + "\"}";
     return request;
   }
 

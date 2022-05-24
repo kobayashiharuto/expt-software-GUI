@@ -11,9 +11,11 @@ import com.google.gson.Gson;
 import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.Listener;
 import jp.waseda.asagi.kobayashi.entities.Room;
+import jp.waseda.asagi.kobayashi.entities.Tip;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.DuplicatedException;
 import jp.waseda.asagi.kobayashi.exceptions.ForbiddenException;
+import jp.waseda.asagi.kobayashi.exceptions.NotEnougnPointException;
 import jp.waseda.asagi.kobayashi.exceptions.NotExistRoomException;
 import jp.waseda.asagi.kobayashi.exceptions.UnknownException;
 
@@ -35,6 +37,15 @@ public class ResponceParser {
     return id;
   }
 
+  public static Tip listenTip(String responce) {
+    final String ujson = responce.replace("#tip#", "");
+    System.out.println(ujson);
+    final Map<String, String> map = new Gson().fromJson(ujson, Map.class);
+    final String username = map.get("username");
+    final String amount = map.get("amount");
+    return new Tip(username, Integer.parseInt(amount));
+  }
+
   public static Comment listenComment(String responce) {
     final String ujson = responce.replace("#comment#", "");
     System.out.println(ujson);
@@ -42,6 +53,16 @@ public class ResponceParser {
     final String username = map.get("username");
     final String message = map.get("message");
     return new Comment(username, message);
+  }
+
+  public static int postTip(String responce) throws NotEnougnPointException {
+    if (responce.equals("#nothisroom#")) {
+      throw new NotEnougnPointException();
+    }
+    final String ujson = responce.replace("#tip#", "");
+    final Map<String, String> map = new Gson().fromJson(ujson, Map.class);
+    final String balance = map.get("balance");
+    return Integer.parseInt(balance);
   }
 
   public static boolean stop(String responce) throws UnknownException {

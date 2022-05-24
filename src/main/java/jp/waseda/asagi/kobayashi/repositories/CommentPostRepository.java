@@ -39,11 +39,6 @@ public class CommentPostRepository extends Thread {
     }
   }
 
-  // static private void sendComment(User user, String comment) throws
-  // InterruptedException {
-  // Thread.sleep(1000); // コメント送信処理を記述
-  // }
-
   static private boolean sendComment(User user, String comment, String roomID) throws IOException, UnknownException {
     final String request = RequestParser.comment(user.id, user.name, roomID, comment);
     final String responce = ServerClient.getInstance().send(request);
