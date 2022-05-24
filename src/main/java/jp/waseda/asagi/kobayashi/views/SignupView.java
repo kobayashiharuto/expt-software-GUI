@@ -7,7 +7,6 @@ import jp.waseda.asagi.kobayashi.utils.ButtonActionAttacher;
 import jp.waseda.asagi.kobayashi.utils.OriginalView;
 
 import java.awt.*;
-import java.util.Map;
 
 public class SignupView extends OriginalView {
   static public final String path = "signup";
@@ -70,13 +69,5 @@ public class SignupView extends OriginalView {
 
     gridPanel.add(submitButton);
     mainPanel.add(gridPanel);
-  }
-
-  @Override
-  public void onAppear(Map<String, String> param) {
-  }
-
-  @Override
-  public void onDisapper() {
   }
 }

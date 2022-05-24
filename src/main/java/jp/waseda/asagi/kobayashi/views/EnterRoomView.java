@@ -35,6 +35,7 @@ public class EnterRoomView extends OriginalView {
   }
 
   @Override
-  public void onDisapper() {
+  public void onReturn() {
+    controller.load();
   }
 }

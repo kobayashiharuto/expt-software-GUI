@@ -7,7 +7,6 @@ import jp.waseda.asagi.kobayashi.utils.ButtonActionAttacher;
 import jp.waseda.asagi.kobayashi.utils.OriginalView;
 
 import java.awt.*;
-import java.util.Map;
 
 public class InitialView extends OriginalView {
   static public final String path = "initial";
@@ -40,13 +39,5 @@ public class InitialView extends OriginalView {
     panel.add(loginButton);
     panel.add(signupButton);
     mainPanel.add(panel);
-  }
-
-  @Override
-  public void onAppear(Map<String, String> param) {
-  }
-
-  @Override
-  public void onDisapper() {
   }
 }

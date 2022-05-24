@@ -14,9 +14,14 @@ import jp.waseda.asagi.kobayashi.settings.Settings;
 public abstract class OriginalView extends JPanel {
     public final String path;
 
-    abstract public void onAppear(Map<String, String> param);
+    public void onAppear(Map<String, String> param) {
+    }
 
-    abstract public void onDisapper();
+    public void onDisapper() {
+    }
+
+    public void onReturn() {
+    }
 
     protected final JPanel mainPanel = new JPanel();
 

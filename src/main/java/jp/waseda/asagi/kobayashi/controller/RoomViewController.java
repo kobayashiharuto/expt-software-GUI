@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 
 import jp.waseda.asagi.kobayashi.entities.Comment;
 import jp.waseda.asagi.kobayashi.entities.User;
+import jp.waseda.asagi.kobayashi.router.Router;
 import jp.waseda.asagi.kobayashi.services.RoomListenService;
 import jp.waseda.asagi.kobayashi.services.RoomService;
 import jp.waseda.asagi.kobayashi.services.CommentPostService;
@@ -58,6 +59,7 @@ public class RoomViewController {
         break;
       case failure:
         CustomDialog.showError("エラー", result.error.message);
+        Router.pop();
         break;
     }
   }

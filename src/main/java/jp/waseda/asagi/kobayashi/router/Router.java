@@ -62,6 +62,7 @@ public class Router extends JFrame {
     routes.get(currPath).onDisapper();
     pageTransitionHistoryStack.pop();
     final String path = pageTransitionHistoryStack.lastElement();
+    routes.get(path).onReturn();
     layout.show(cardPanel, path);
   }
 

@@ -3,7 +3,6 @@ package jp.waseda.asagi.kobayashi.client;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import jp.waseda.asagi.kobayashi.settings.Settings;
 
