@@ -1,6 +1,7 @@
 package jp.waseda.asagi.kobayashi.repositories;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.function.Consumer;
 
 import jp.waseda.asagi.kobayashi.client.RoomClient;
@@ -8,6 +9,7 @@ import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.NetworkException;
 import jp.waseda.asagi.kobayashi.exceptions.NotExistRoomException;
+import jp.waseda.asagi.kobayashi.settings.Settings;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
 import jp.waseda.asagi.kobayashi.utils.RequestParser;
 import jp.waseda.asagi.kobayashi.utils.ResponceParser;
@@ -41,7 +43,8 @@ public class RoomEnterRepository extends Thread {
 
   static private Room enterRoom(User user, Room room) throws IOException, NotExistRoomException {
     RoomClient.getInstance().connectRoomSocket();
-    final String request = RequestParser.listenroom(room.id);
+    final String ip = InetAddress.getLocalHost().getHostAddress();
+    final String request = RequestParser.listenroom(room.id, user.id, ip, Settings.CLIENT_LISTEN_PORT);
     final String responce = RoomClient.getInstance().send(request);
     ResponceParser.listenroom(responce);
     return room;

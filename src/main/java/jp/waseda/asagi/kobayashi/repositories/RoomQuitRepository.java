@@ -12,17 +12,19 @@ import jp.waseda.asagi.kobayashi.utils.ResponceParser;
 
 public class RoomQuitRepository extends Thread {
   private final String roomID;
+  private final String userID;
   private final Consumer<OriginalResult<Boolean>> callback;
 
-  public RoomQuitRepository(String roomID, Consumer<OriginalResult<Boolean>> callback) {
+  public RoomQuitRepository(String roomID, String userID, Consumer<OriginalResult<Boolean>> callback) {
     this.roomID = roomID;
+    this.userID = userID;
     this.callback = callback;
   }
 
   @Override
   public void run() {
     try {
-      final Boolean success = stop(roomID);
+      final Boolean success = stop(roomID, userID);
       final OriginalResult<Boolean> result = new OriginalResult<Boolean>(success);
       callback.accept(result);
     } catch (IOException e) {
@@ -40,8 +42,8 @@ public class RoomQuitRepository extends Thread {
   // return new User("1231", name, password, 100);
   // }
 
-  private Boolean stop(String roomID) throws IOException, UnknownException {
-    final String request = RequestParser.quitroom(roomID);
+  private Boolean stop(String roomID, String userID) throws IOException, UnknownException {
+    final String request = RequestParser.quitroom(roomID, userID);
     System.out.println("awdawda");
     final String responce = ServerClient.getInstance().send(request);
     final boolean success = ResponceParser.quitroom(responce);

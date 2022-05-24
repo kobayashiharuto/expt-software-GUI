@@ -28,13 +28,13 @@ public class RequestParser {
     return request;
   }
 
-  public static String listenroom(String roomid) {
-    final String request = "#listenroom#" + "{\"" + roomid + "\"}";
+  public static String listenroom(String roomid, String uid, String ip, int port) {
+    final String request = "#listenroom#" + "{\"" + roomid + "\",\"" + uid + "\",\"" + ip + "\",\"" + port + "\"}";
     return request;
   }
 
-  public static String quitroom(String roomid) {
-    final String request = "#quitroom#" + "{\"" + roomid + "\"}";
+  public static String quitroom(String roomid, String uid) {
+    final String request = "#quitroom#" + "{\"" + roomid + "\",\"" + uid + "\"}";
     return request;
   }
 

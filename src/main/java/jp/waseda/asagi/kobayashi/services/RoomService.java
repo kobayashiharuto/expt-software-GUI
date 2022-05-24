@@ -28,8 +28,8 @@ public class RoomService {
     roomListRepository.start();
   }
 
-  public void quitRoom(String roomID, Consumer<OriginalResult<Boolean>> callback) {
-    RoomQuitRepository roomQuitRepository = new RoomQuitRepository(roomID, callback);
+  public void quitRoom(String roomID, String userID, Consumer<OriginalResult<Boolean>> callback) {
+    RoomQuitRepository roomQuitRepository = new RoomQuitRepository(roomID, userID, callback);
     roomQuitRepository.start();
   }
 

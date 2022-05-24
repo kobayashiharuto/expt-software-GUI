@@ -1,5 +1,7 @@
 package jp.waseda.asagi.kobayashi.utils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import jp.waseda.asagi.kobayashi.entities.Comment;
+import jp.waseda.asagi.kobayashi.entities.Listener;
 import jp.waseda.asagi.kobayashi.entities.Room;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.DuplicatedException;
@@ -15,6 +18,22 @@ import jp.waseda.asagi.kobayashi.exceptions.NotExistRoomException;
 import jp.waseda.asagi.kobayashi.exceptions.UnknownException;
 
 public class ResponceParser {
+
+  public static Listener startListen(String responce) throws NumberFormatException, UnknownHostException {
+    final String ujson = responce.replace("#startListen#", "");
+    final Map<String, String> map = new Gson().fromJson(ujson, Map.class);
+    final String id = map.get("id");
+    final String ip = map.get("ip");
+    final String port = map.get("port");
+    return new Listener(id, Integer.parseInt(port), InetAddress.getByName(ip));
+  }
+
+  public static String stopListen(String responce) {
+    final String ujson = responce.replace("#stopListen#", "");
+    final Map<String, String> map = new Gson().fromJson(ujson, Map.class);
+    final String id = map.get("id");
+    return id;
+  }
 
   public static Comment listenComment(String responce) {
     final String ujson = responce.replace("#comment#", "");

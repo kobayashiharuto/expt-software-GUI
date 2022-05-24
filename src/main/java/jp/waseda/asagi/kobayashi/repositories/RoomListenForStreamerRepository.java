@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import jp.waseda.asagi.kobayashi.client.RoomClient;
 import jp.waseda.asagi.kobayashi.entities.Comment;
+import jp.waseda.asagi.kobayashi.entities.Listener;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.exceptions.RoomCloseException;
 import jp.waseda.asagi.kobayashi.utils.OriginalResult;
@@ -28,22 +29,21 @@ public class RoomListenForStreamerRepository extends Thread {
     onStreaming = true;
     while (onStreaming) {
       try {
-        System.out.println("listen comment start: " + user.name);
-        final Comment comment = streamingComment(user, roomID);
+        final Object data = streamingComment(user, roomID);
         if (!onStreaming) {
           break;
         }
-        if (comment == null) {
+        if (data == null) {
           continue;
         }
-        final OriginalResult<Comment> result = new OriginalResult<Comment>(comment);
+        final OriginalResult<Object> result = new OriginalResult<Object>(data);
         callback.accept(result);
       } catch (IOException e) {
         onStreaming = false;
         break;
       } catch (RoomCloseException e) {
         onStreaming = false;
-        final OriginalResult<Comment> result = new OriginalResult<Comment>(new RoomCloseException());
+        final OriginalResult<Object> result = new OriginalResult<Object>(new RoomCloseException());
         callback.accept(result);
         break;
       }
@@ -62,11 +62,19 @@ public class RoomListenForStreamerRepository extends Thread {
   // return comment;
   // }
 
-  static private Comment streamingComment(User user, String roomID) throws IOException, RoomCloseException {
+  static private Object streamingComment(User user, String roomID) throws IOException, RoomCloseException {
     final String response = RoomClient.getInstance().read();
     if (response.matches("#comment#(.*)")) {
       final Comment comment = ResponceParser.listenComment(response);
       return comment;
+    }
+    if (response.matches("#startListen#(.*)")) {
+      final Listener listener = ResponceParser.startListen(response);
+      return listener;
+    }
+    if (response.matches("#stopListen#(.*)")) {
+      final String id = ResponceParser.stopListen(response);
+      return id;
     }
     if (response.matches("#LiveIsStopped#(.*)")) {
       throw new RoomCloseException();

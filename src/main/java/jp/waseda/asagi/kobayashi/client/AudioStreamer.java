@@ -16,7 +16,7 @@ public class AudioStreamer extends Thread {
   private TargetDataLine line;
   private boolean onStreaming = false;
 
-  public void addListner(Listener listener) {
+  public void addlistener(Listener listener) {
     listeners.add(listener);
   }
 
@@ -49,7 +49,6 @@ public class AudioStreamer extends Thread {
           break;
         }
         line.read(buf, 0, buf.length); // バッファに音声データを書き込む
-        System.out.println("read");
         for (Listener listener : listeners) {
           DatagramPacket packet = new DatagramPacket(buf, buf.length, listener.address, listener.port);
           socket.send(packet);

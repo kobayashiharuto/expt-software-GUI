@@ -3,6 +3,7 @@ package jp.waseda.asagi.kobayashi.controller;
 import javax.swing.JLabel;
 
 import jp.waseda.asagi.kobayashi.entities.Comment;
+import jp.waseda.asagi.kobayashi.entities.Listener;
 import jp.waseda.asagi.kobayashi.entities.User;
 import jp.waseda.asagi.kobayashi.router.Router;
 import jp.waseda.asagi.kobayashi.services.RoomListenService;
@@ -46,10 +47,11 @@ public class RoomViewController {
 
   public void dispose(boolean isCreated) {
     roomListenService.dispose();
+    final User user = UserState.getInstance().get();
     if (isCreated) {
       roomService.stopStreaming(roomID, (result) -> exitCallback(result));
     } else {
-      roomService.quitRoom(roomID, (result) -> exitCallback(result));
+      roomService.quitRoom(roomID, user.id, (result) -> exitCallback(result));
     }
   }
 
@@ -77,6 +79,16 @@ public class RoomViewController {
           final JLabel commentLabel = new JLabel(comment.name + ": " + comment.comment);
           view.scrollPanel.add(commentLabel, 0);
           view.revalidate();
+          return;
+        }
+        if (result.value instanceof Listener) {
+          final Listener listener = (Listener) result.value;
+          roomListenService.addlistener(listener);
+          return;
+        }
+        if (result.value instanceof String) {
+          final String uid = (String) result.value;
+          roomListenService.removeLisnter(uid);
           return;
         }
         break;

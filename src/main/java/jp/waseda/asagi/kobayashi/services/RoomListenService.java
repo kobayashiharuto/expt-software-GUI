@@ -33,8 +33,8 @@ public class RoomListenService {
     listenForStreamerRepo.start();
   }
 
-  public void addLisnter(Listener lisnter) {
-    audioStreamer.addListner(lisnter);
+  public void addlistener(Listener listener) {
+    audioStreamer.addlistener(listener);
   }
 
   public void removeLisnter(String uid) {
