@@ -35,14 +35,13 @@ public class RoomViewController {
     commentPostService.post(user, roomID, comment, (result) -> commentPostCallback(result));
   }
 
-  public void listenRoomForListener(String roomID) {
+  public void listenSetup(boolean isCreated, String roomID) {
     final User user = UserState.getInstance().get();
-    roomListenService.listenForListener(user, roomID, (result) -> listenerCallback(result));
-  }
-
-  public void listenRoomForStreamer(String roomID) {
-    final User user = UserState.getInstance().get();
-    roomListenService.listenForStremaer(user, roomID, (result) -> listenerCallback(result));
+    if (isCreated) {
+      roomListenService.setupForStreamer(user, roomID, (result) -> streamerCallback(result));
+    } else {
+      roomListenService.setupForListener(user, roomID, (result) -> listenerCallback(result));
+    }
   }
 
   public void dispose(boolean isCreated) {
@@ -61,6 +60,25 @@ public class RoomViewController {
         final JLabel commentLabel = new JLabel(result.value.name + ": " + result.value.comment);
         view.scrollPanel.add(commentLabel, 0);
         view.revalidate();
+        break;
+      case failure:
+        CustomDialog.showError("エラー", result.error.message);
+        Router.pop();
+        break;
+    }
+  }
+
+  private void streamerCallback(OriginalResult<?> result) {
+    switch (result.type) {
+      case success:
+        if (result.value instanceof Comment) {
+          final Comment comment = (Comment) result.value;
+          System.out.println("comment: " + comment.name + ", " + comment.comment);
+          final JLabel commentLabel = new JLabel(comment.name + ": " + comment.comment);
+          view.scrollPanel.add(commentLabel, 0);
+          view.revalidate();
+          return;
+        }
         break;
       case failure:
         CustomDialog.showError("エラー", result.error.message);

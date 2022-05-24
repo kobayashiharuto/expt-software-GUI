@@ -14,10 +14,10 @@ public class RoomListenForStreamerRepository extends Thread {
   private final User user;
   private final String roomID;
   private boolean onStreaming = false;
-  private final Consumer<OriginalResult<Comment>> callback;
+  private final Consumer<OriginalResult<?>> callback;
 
   public RoomListenForStreamerRepository(User user,
-      String roomID, Consumer<OriginalResult<Comment>> callback) {
+      String roomID, Consumer<OriginalResult<?>> callback) {
     this.user = user;
     this.roomID = roomID;
     this.callback = callback;

@@ -24,6 +24,5 @@ public class Settings {
   public static final int SERVER_PORT = 8080;
 
   // クライアントのエンドポイント
-  public static final int CLIENT_LISTEN_PORT = 5050;
-  public static final int CLIENT_SEND_PORT = 5051;
+  public static final int CLIENT_LISTEN_PORT = 50500;
 }

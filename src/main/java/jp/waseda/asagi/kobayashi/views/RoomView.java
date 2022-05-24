@@ -58,12 +58,7 @@ public class RoomView extends OriginalView {
 
     roomNameLabel.setText(roomName);
     changeBackButtonText(isCreated ? "配信停止" : "部屋を出る");
-
-    if (isCreated) {
-      controller.listenRoomForStreamer(roomID);
-    } else {
-      controller.listenRoomForListener(roomID);
-    }
+    controller.listenSetup(isCreated, roomID);
   }
 
   @Override
