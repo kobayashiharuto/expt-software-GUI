@@ -20,7 +20,7 @@ public class Settings {
   public static final int ROOM_NAME_LIMIT_MAX = 10;
 
   // サーバーのエンドポイント
-  public static final String SERVER_IP = "localhost";
+  public static final String SERVER_IP = "13.231.246.163";
   public static final int SERVER_PORT = 8080;
 
   // クライアントのエンドポイント
