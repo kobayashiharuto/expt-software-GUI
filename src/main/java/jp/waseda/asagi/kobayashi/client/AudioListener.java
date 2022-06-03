@@ -45,6 +45,7 @@ public class AudioListener extends Thread {
         line.write(buf, 0, buf.length); // バッファをアウトプットデータラインに流す（再生）
       }
     } catch (Exception e) {
+      System.out.println(e);
     } finally {
       System.out.println("音声受信終了");
     }

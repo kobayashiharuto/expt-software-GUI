@@ -55,6 +55,7 @@ public class AudioStreamer extends Thread {
         }
       }
     } catch (Exception e) {
+      System.out.println(e);
     } finally {
       System.out.println("音声配信接続終了");
     }
