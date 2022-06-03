@@ -6,7 +6,7 @@
 
 ## 実行方法
 
-1. [サーバー](https://github.com/ZeekYin/expt-software-server)を起動
+1. [サーバー](https://github.com/kobayashiharuto/expt-software-server)を起動
 1. `mvn package`
 1. `mvn exec:java`
 
